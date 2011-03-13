@@ -1,0 +1,200 @@
+body {
+	font: normal 15px Helvetica, Arial, sans-serif;
+	color: #4f6b72;
+	background: #E6EAE9;
+}
+
+a {
+	color: #c75f3e;
+}
+
+#container
+{
+	margin: 70px auto 40px;
+	width: 800px;
+}
+
+#containerLogin
+{
+	margin: 200px auto 40px;
+	width: 400px;
+}
+
+#content
+{
+	background: #fbfbfb;
+	border: 1px solid #bbb;
+	padding: 20px;
+	
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	
+	-webkit-box-shadow: 2px 2px 20px 1px rgba(0,0,0,0.2);
+	-moz-box-shadow: 2px 2px 20px 1px rgba(0,0,0,0.2);
+}
+
+h1
+{
+	font-size: 24px;
+}
+
+h2
+{
+	font-size: 20px;
+	padding: 8px 0;
+}
+
+h3
+{
+	font-size: 16px;
+}
+
+table {
+	border: 1px solid #C1DAD7;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+td {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+}
+
+thead td a
+{
+	color: blue;
+	text-align: right;
+	text-decoration: none;
+}
+
+tbody tr:hover td {
+	background: #E6EAFA;
+	color: #797268;
+}
+
+thead tr td {
+	background: #dfe8fa no-repeat;
+	font: bold Helvetica, Arial, sans-serif;
+}
+
+ul#menu
+{
+	list-style: none;
+	margin-bottom: 20px;
+	width: 770px;
+}
+#menu li
+{
+	float: left;
+	display: block;
+	margin: 0 10px 10px 0;
+}
+
+#menu li.right
+{
+	float: right;
+}
+
+.right
+{
+	float: right;
+}
+.clear
+{
+	clear: both;
+}
+
+input[type="text"], input[type="password"]
+{
+	width: 300px;
+}
+
+h1#logo
+{
+	font-size: 40px;
+
+	text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+	text-align: center;
+	margin: 20px 0;
+}
+
+h1#logo a
+{
+	color: inherit;
+	text-decoration: none;
+}
+h1#logo a:hover
+{
+	border-bottom: 1px solid #aaa;
+}
+
+ul#startmenu
+{
+	list-style: none;
+}
+
+
+
+ul#startmenu li a
+{
+	border: 1px solid #ccc;
+	display: block;
+	float: left;
+	text-align: center;
+	height: 100px;
+	margin: 20px 10px 10px 0;
+	padding: 70px 30px 0 30px;
+	width: 180px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+	-webkit-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.2);
+	-moz-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.2);
+
+	color: blue;
+}
+
+ul#startmenu li a:hover
+{
+	background-color: #fff;
+}
+
+#registrationForm label
+{
+	margin-bottom: 10px;
+}
+
+.notice, .success, .warning, .error, .validation {
+    border: 1px solid;
+    margin: 10px 0px 20px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.notice {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('/images/info.png');
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('/images/success.png');
+}
+.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('/images/warning.png');
+}
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('/images/error.png');
+}
