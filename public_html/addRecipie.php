@@ -1,28 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Lägg till recept - Veckans meny</title>
-	</head>
-	<body>
-		<h1>Veckans meny</h1>
-		<h2>Lägg till recept</h2>
+<?php
 
-		<form action="?addRecipie" method="post">
-			<label for="title">Titel:</label>
-			<br />
-			<input type="text" id="title" name="title" />
+	require_once('../include/core/common.php');
 
-			<br />
-			<br />
-			<label for="link">Länk:</label>
-			<br />
-			<input type="text" id="link" name="link" />
-			
-			<br />
-			<br />
-			<input type="submit" value="Lägg till" />
-			
-		</form>
+	require_once( PATHS_LIBRARIES . 'recipies.add.class.php');
+	
+	$ui_options = array();
+	
+	$ui_options['title'] = 'Lägg till recept - Veckans meny';
+	
+	$class_Recipies = new RecipiesAdd();
+	
+	$class_UI = new UI($ui_options);
+	$class_UI->top();
 
-	</body>
-</html>
+	$addSuccess = false;
+	
+	if(count($_POST) > 0)
+	{
+		$addSuccess = $class_Recipies->processRecipieAddition($_POST);
+	}
+
+	echo '<h2>Lägg till recept</h2>'."\n";
+	
+	echo $class_Recipies->drawAddRecipieForm($_POST);
+
+	$class_UI->bottom();
+?>

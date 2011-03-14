@@ -16,7 +16,7 @@
 			
 			$this->ui_options['return'] = isset($this->ui_options['return']) ? $this->ui_options['return'] : false;
 			
-			$this->ui_options['title'] = (isset($this->ui_options['title'])) ? $this->ui_options['title'] : 'Amsterdam 2011';
+			$this->ui_options['title'] = (isset($this->ui_options['title'])) ? $this->ui_options['title'] : 'Veckans meny';
 			
 			$this->ui_options['login'] = (isset($this->ui_options['login'])) ? $this->ui_options['login'] : '';
 			
@@ -79,7 +79,7 @@
 						
 			$output .= '<div id="container'.$this->ui_options['login'].'">'."\n";
 
-			$output .= '<h1 id="logo"><a href="/">Amsterdam 2011!</a></h1>'."\n";			
+			$output .= '<h1 id="logo"><a href="/">Veckans meny</a></h1>'."\n";			
 
 			$output .= '<div id="content">'."\n";
 			
