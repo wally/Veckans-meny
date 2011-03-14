@@ -52,7 +52,7 @@
 				$query = 'INSERT INTO recipies(title, link) VALUES("'.$data['title'].'", "'.$data['link'].'")';
 				$sql = $this->db->query($query, __FILE__, __LINE__);
 				$id = $this->db->insert_id;
-				successfulAddition($id);
+				$this->successfulAddition($id);
 			}
 			else
 			{
