@@ -11,6 +11,7 @@
 
 		function __construct()
 		{
+			parent::__construct();
 			$this->db = new DB();
 		}
 
@@ -25,6 +26,13 @@
 				{
 					if( !empty($this->data[$name]) )
 					{
+						if($name == 'link')
+						{
+							if(!$this->checkLink($this->data['link']))
+							{
+								$this->addError('Du har angivit en felaktig länk.');
+							}
+						}
 						$this->validFields[$name] = $this->data[$name];
 					}
 					else
@@ -44,27 +52,31 @@
 
 		public function AddRecipie($data)
 		{
-			//check existing records
-			$query = 'SELECT id, title WHERE link LIKE "'.$data['link'].'%" LIMIT 1';
-			$sql = $this->db->query($query, __FILE__, __LINE__);
-			if($sql->num_rows == 0)
+			
+			$checkExistingArguments = array('identifier'=>'link', 'identifierValue'=>$data['link'], 'fields'=>'id');
+			
+			$recipieExists = $this->checkExistingRecipie( $checkExistingArguments );
+			
+			if($recipieExists === false)
 			{
 				$query = 'INSERT INTO recipies(title, link) VALUES("'.$data['title'].'", "'.$data['link'].'")';
 				$sql = $this->db->query($query, __FILE__, __LINE__);
-				$id = $this->db->insert_id;
+				$id = $this->db->mysqli->insert_id;
 				$this->successfulAddition($id);
 			}
 			else
 			{
-				$result = $sql->fetch_assoc();
-				$this->addError('Receptet finns redan. Den är tillagd under &quot;<a href="viewRecipie.php?id='.$result['id'].'">'.$result['title'].'</a>&quot.');
+				$recipieLink = $this->createRecipieLink(array('identifier'=>'id', 'identifierValue'=>$recipieExists[0]['id']));
+				$this->addError('Receptet finns redan. Den är tillagd under &quot;'.$recipieLink.'&quot.');
 			}
 			
 		}
 		
 		public function successfulAddition($id)
 		{
-			
+			$href = $this->createRecipieLink(array('identifier'=>'id', 'identifierValue'=>$id), true);
+			header('Location: '.$href);
+			exit;
 		}
 		
 		public function drawAddRecipieForm($data)

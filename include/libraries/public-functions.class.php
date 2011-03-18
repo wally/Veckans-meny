@@ -67,6 +67,25 @@
 			return false; 
 		}
 		
+		public function cleanFields($fields, $allowedFields)
+		{
+			$fields = preg_replace('/([^a-zA-Z0-9\_\-\,*])/', '', $fields);
+			$fields = split(',', $fields);
+			
+			$validFields = array();
+			foreach($fields as $field)
+			{
+				if(!empty($field))
+				{
+					if( in_array($field, $allowedFields))
+					{
+						$validFields[] = $field;
+					}
+				}
+			}
+			return $validFields;
+		}
+		
 		public function displaySuccessMessage()
 		{
 			return '<div class="success">'.$text.'</div>';
@@ -563,6 +582,13 @@
 			return preg_match("!^$addr_spec$!", $email) ? 1 : 0;
 		}
 	
+		function checkLink($link)
+		{
+			
+			$link = preg_replace('#((http://|https://|ftp://|www\.)(www\.)?)([a-z0-9\#_%\?&//=\+@\.:;-]{4,})#eis', 
+									"('$2' != 'http://' && '$2' != 'ftp://' && '$2' != 'https://') ? 'http://$1$4' : '$1$4'",	$link);
+			return preg_match('#((http://|https://|ftp://|www\.)(www\.)?)([a-z0-9\#_%\?&//=\+@\.:;-]{4,})#eis', $link);
+		}
 		
 		function create_table($form, $options=null)
 		{

@@ -1,5 +1,4 @@
 <?php
-
 	require_once('../include/core/common.php');
 
 	require_once( PATHS_LIBRARIES . 'recipies.add.class.php');
