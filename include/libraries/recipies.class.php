@@ -9,7 +9,7 @@
 												, 'webb'
 											);
 		
-		private $db;
+		public $db;
 		
 		public function __construct()
 		{
@@ -77,16 +77,32 @@
 			}
 		}
 		
-		public function createRecipieLink($data, $hrefOnly=false)
+		public function createRecipieLink($data, $hrefOnly=false, $precachedInfo = array())
 		{
-			$data['fields'] = 'id,title';
-			$info = $this->getRecipie($data);
-			$link = $href = '';
+			if(count($precachedInfo) == 0)
+			{
+				$data['fields'] = 'webb,title';
+				$info = $this->getRecipie($data);
+				$link = $href = '';
+			}
+			else
+			{
+				$info = array($precachedInfo);
+			}
+			
 			if($info !== false)
 			{
 				$info = $info[0];
-				$href = 'viewRecipie.php?id='.$info['id'];
+				if(!isset($info['webb']))
+				{
+					$info['webb'] = $this->make_webbable_easy($info['title']);
+				}
+				$href = '/recept/'.$info['webb'];
 				$link = '<a href="'.$href.'">'.$info['title'].'</a>';
+			}
+			else
+			{
+				return '/';
 			}
 			
 			if($hrefOnly === true)
@@ -95,6 +111,20 @@
 			}
 			
 			return $link;
+		}
+		
+		public function getUserRecipieRating($options)
+		{
+
+			if( !(isset($options['recipieId']) && intval($options['recipieId']) > 0) )
+			{
+				return false;
+			}
+			
+			require_once('ratings.class.php');
+			
+			$class_Ratings = new Ratings();
+			return $class_Ratings->getUserRecipieRating($options);
 		}
 		
 		public function cleanFields($fields)

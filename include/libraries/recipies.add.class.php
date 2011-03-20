@@ -4,7 +4,6 @@
 
 	class RecipiesAdd extends Recipies
 	{
-		private $db;
 		var $allowedFields = array('title'=>'Titel', 'link'=>'Länk');
 		var $errors = array();
 		var $errorCounter = 0;
@@ -12,7 +11,6 @@
 		function __construct()
 		{
 			parent::__construct();
-			$this->db = new DB();
 		}
 
 		public function processRecipieAddition($data)
@@ -59,7 +57,8 @@
 			
 			if($recipieExists === false)
 			{
-				$query = 'INSERT INTO recipies(title, link) VALUES("'.$data['title'].'", "'.$data['link'].'")';
+				$webb = $this->make_webbable_easy($data['title']);
+				$query = 'INSERT INTO recipies(title, link, webb) VALUES("'.$data['title'].'", "'.$data['link'].'", "'.$webb.'")';
 				$sql = $this->db->query($query, __FILE__, __LINE__);
 				$id = $this->db->mysqli->insert_id;
 				$this->successfulAddition($id);

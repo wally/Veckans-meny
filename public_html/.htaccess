@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteBase /
+
+RewriteRule ^([^/\.]+)$ view.php?id=$1 [L]
+
+RewriteRule ^recept/([^/\.]+[a-z\-]+)$ viewRecipie.php?webb=$1 [L]
