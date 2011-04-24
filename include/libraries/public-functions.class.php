@@ -68,9 +68,9 @@
 		}
 		
 		public function cleanFields($fields, $allowedFields)
-		{
+		{			
 			$fields = preg_replace('/([^a-zA-Z0-9\_\-\,*])/', '', $fields);
-			$fields = split(',', $fields);
+			$fields = explode(',', $fields);
 			
 			$validFields = array();
 			foreach($fields as $field)

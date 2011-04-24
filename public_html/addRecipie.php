@@ -5,7 +5,7 @@
 	
 	$ui_options = array();
 	
-	$ui_options['title'] = 'Lägg till recept - Veckans meny';
+	$ui_options['title'] = 'Lägg till recept - ';
 	
 	$class_Recipies = new RecipiesAdd();
 	

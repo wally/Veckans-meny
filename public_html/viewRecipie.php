@@ -7,13 +7,20 @@
 	
 	$class_Recipies = new RecipiesView();
 	
-	$recipie = $class_Recipies->viewRecipie(array('webb'=>$_GET['webb']));
+	if(isset($_GET['webb']) && empty($_GET['webb']))
+	{
+		$webb = $_GET['webb'];
+	}
+
+	$recipie = $class_Recipies->viewRecipie(array('webb'=>$webb));
 	
 	$recipieTitle = $recipie['info']['title'];
 	
 	$ui_options = array();
 	
-	$ui_options['title'] = $recipieTitle.' - Veckans meny';
+	$ui_options['title'] = $recipieTitle.' - ';
+	
+	$ui_options['menu']['name'] = 'recipie';
 	
 	$class_UI = new UI($ui_options);
 	$class_UI->top();

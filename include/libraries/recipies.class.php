@@ -7,9 +7,14 @@
 												, 'title'
 												, 'link'
 												, 'webb'
+												, 'added'
+												, 'addedBy'
+												, 'views'
 											);
 		
 		public $db;
+		
+		public $viewLimit = 2;
 		
 		public function __construct()
 		{
@@ -37,7 +42,7 @@
 			{
 				return false;
 			}
-						
+			
 			if( isset($data['identifier'], $data['identifierValue']) )
 			{
 				
@@ -54,12 +59,17 @@
 			}
 			
 			$limit = isset($data['limit']) ? intval($data['limit']) : 1;
+			$offset = isset($data['offset']) ? intval($data['offset']) : 0;
+			
+			$orderBy = isset($data['orderBy']) ? $data['orderBy'] : 1;
+			$sort = isset($data['sort']) ? (in_array(strtolower($data['sort']), array('asc', 'desc')) ? strtoupper($data['sort']) : 'ASC' ) : 'ASC';
 			
 			$fields = $this->cleanFields($data['fields']);
 			
 			$fieldsSQL = implode(', ', $fields);
 			
-			$query = 'SELECT '. $fieldsSQL.' FROM recipies '.$whereSQL.' LIMIT '.$limit;
+			$query = 'SELECT '. $fieldsSQL.' FROM '. TABLE_RECIPIES . ' '.$whereSQL.' ORDER BY '. $orderBy.' ' . $sort .' LIMIT '.$offset. ', '.$limit;
+			
 			$result = $this->db->query($query, __FILE__, __LINE__);
 			
 			if($result->num_rows > 0)
@@ -74,6 +84,24 @@
 			else
 			{
 				return false;
+			}
+		}
+		
+		public function getRecipieContent($id = false)
+		{
+			if( $id === false && isset($this->recipieInfo['id']) )
+			{
+				$id = $this->recipieInfo['id'];
+			}
+			
+			if(intval($id) <= 0 )
+			{
+				return false;
+			}
+			
+			if( $this->recipieInfo['type'] == 'link')
+			{
+				$sql = 'SELECT description, content WHERE parentId = '. $id .' LIMIT 1';
 			}
 		}
 		
@@ -93,11 +121,19 @@
 			if($info !== false)
 			{
 				$info = $info[0];
+			
 				if(!isset($info['webb']))
 				{
 					$info['webb'] = $this->make_webbable_easy($info['title']);
 				}
-				$href = '/recept/'.$info['webb'];
+
+				$href = '/recept/'.$info['webb'].'/';
+
+				if($hrefOnly === true)
+				{
+					return $href;
+				}
+				
 				$link = '<a href="'.$href.'">'.$info['title'].'</a>';
 			}
 			else
@@ -105,12 +141,18 @@
 				return '/';
 			}
 			
-			if($hrefOnly === true)
-			{
-				return $href;
-			}
+			
 			
 			return $link;
+		}
+		
+		public function getNumRecipies()
+		{
+			$query = 'SELECT NULL FROM '. TABLE_RECIPIES . ' WHERE is_removed = 0';
+						
+			$result = $this->db->query($query, __FILE__, __LINE__);
+			
+			return $result->num_rows;
 		}
 		
 		public function getUserRecipieRating($options)
@@ -131,7 +173,6 @@
 		{
 			return parent::cleanFields($fields, $this->allowedRecipieIdentifiers);
 		}
-		
 	}
 
 ?>

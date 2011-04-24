@@ -1,6 +1,18 @@
 RewriteEngine on
 RewriteBase /
 
-RewriteRule ^([^/\.]+)$ view.php?id=$1 [L]
+#RewriteRule ^([^/\.]+)$ view.php?id=$1 [L]
 
-RewriteRule ^recept/([^/\.]+[a-z\-]+)$ viewRecipie.php?webb=$1 [L]
+RewriteCond %{HTTP_HOST} ^veckansmeny.dev [NC] 
+RewriteRule ^(.*)$ http://www.veckansmeny.dev/$1 [L,R=301] 
+
+RewriteRule ^recept$ /recept/ [R=301,L]
+
+RewriteRule ^recept/$ listRecipies.php [L]
+RewriteRule ^recept/([0-9]+)$ recept/$1/ [R=301,L]
+RewriteRule ^recept/([0-9]+)/$ listRecipies.php?page=$1 [L]
+
+RewriteRule ^recept/([a-z\-]+)$ recept/$1/ [R=301,L]
+RewriteRule ^recept/([a-z\-]+)/$ viewRecipie.php?webb=$1 [L]
+
+RewriteRule ^addRecipie$ addRecipie.php [L]
