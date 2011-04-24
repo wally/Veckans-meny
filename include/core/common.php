@@ -5,6 +5,8 @@
 	error_reporting(E_ALL);
 	ob_start();
 	
+	setlocale(LC_ALL, 'sv_se');
+	
 	// Sanitize POST and GET data
 	$new_post = array();
 	$new_get = array();
@@ -58,6 +60,5 @@
 	require_once(PATHS_CONFIGS . 'menu.conf.php');
 
 	$public = new PublicFunctions();
-	$public->checkLogin();
 
 ?>
