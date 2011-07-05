@@ -102,11 +102,32 @@
 			}
 			
 
-			$output .= '<label for="title">Titel:</label><br /><input type="text" style="width:200px;font-size:24px;" name="title" id="title" value="'.$fieldData['title'].'" />'."\n";
-			$output .= '<br />'."\n";
-			$output .= '<label for="link">Länk:</label><br /><input type="text" style="width:200px;" name="link" id="link" value="'.$fieldData['link'].'" />'."\n";
+			$output .= '<label for="title">Titel:</label><br /><input type="text" style="font-size:24px;" name="title" id="title" value="'.$fieldData['title'].'" />'."\n";
+			$output .= '<br /><br /><br /><h3>Fyll i med en länk till ett recept eller med ett recept du skriver in själv</h3>'."\n";
+			
+			//link
+			$output .= '<div class="rounded-16">'."\n";
+			$output .= '<h4><label for="link">Länk <span class="help" title="Länk till receptet">?</span></label></h4><input type="text" style="" name="link" id="link" value="'.$fieldData['link'].'" />'."\n";
+			$output .= '</div>'."\n";
+			
+			// or manual interaction
 			$output .= '<br /><br />'."\n";
-			$output .= '<input type="submit" value="Lägg till recept" />'."\n";
+
+			
+			$output .= '<div class="rounded-16">'."\n";
+			$output .= '<h4>Eget recept</h4>'."\n";
+			$output .= '<label for="ingredients">Ingredienser</label><br />'."\n";
+			$output .= '<textarea name="ingredients" id="ingredients" rows="6" cols="60"></textarea>'."\n";
+			
+			$output .= '<br /><br />'."\n";
+			$output .= '<label for="method">Metod (gärna i listform)</label><br />'."\n";
+			$output .= '<textarea name="method" id="method" rows="6" cols="60">1.&nbsp;&#10;2.&nbsp;</textarea>'."\n";
+			$output .= '</div>'."\n";
+			
+			$output .= '<div class="submits">'."\n";
+				$output .= '<input type="submit" class="green" name="preview" value="Förhandstitta" />'."\n";
+				$output .= ' eller <a href="/recept/" title="Avbryt">avbryt</a>.'."\n";
+			$output .= '</div>'."\n";
 			$output .= '</form>'."\n";
 
 			return $output;

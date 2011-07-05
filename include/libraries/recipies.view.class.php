@@ -235,7 +235,7 @@
 			}
 
 			$output .= '<a class="toggleFavoriteRecipie" href="/account/favourite/'.$recipieInfo['webb'].'" title="'.$title.'">'.$title.'</a>';
-			$output .= '<div class="clear"></div>';
+
 
 			$output .= '</span>'."\n";
 			
@@ -253,6 +253,8 @@
 		
 		public function displayRecipieContent()
 		{
+			$this->preint_r($_SERVER);
+			
 			if( !(isset($this->recipieInfo) && count($this->recipieInfo) > 0) )
 			{
 				$this->recipieInfo['recipie'] = $this->getRecipieContent();
