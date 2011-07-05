@@ -88,7 +88,7 @@
 			$output .= '">'."\n";
 			
 			$output .= '
-				<div id="container" class="clearfix">	
+				<div class="clearfix">	
 		<div id="header">
 			<div class="inside clearfix">			
 				<div id="logo"> 
