@@ -12,7 +12,7 @@ RewriteRule ^recept/$ listRecipies.php [L]
 RewriteRule ^recept/([0-9]+)$ recept/$1/ [R=301,L]
 RewriteRule ^recept/([0-9]+)/$ listRecipies.php?page=$1 [L]
 
-RewriteRule ^recept/add$ recept/add [L]
+RewriteRule ^recept/add$ recept/add/ [R=301,L]
 RewriteRule ^recept/add/$ addRecipie [L]
 RewriteRule ^addRecipie$ addRecipie.php [L]
 
