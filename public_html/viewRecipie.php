@@ -1,18 +1,23 @@
 <?php
 	require_once('../include/core/common.php');
-
-	$_SESSION['userid'] = 29221;
 	
 	require_once( PATHS_LIBRARIES . 'recipies.view.class.php');
 	
 	$class_Recipies = new RecipiesView();
 	
-	if(isset($_GET['webb']) && empty($_GET['webb']))
+	$webb = $id = false;
+	
+	if(isset($_GET['webb']) && !empty($_GET['webb']))
 	{
 		$webb = $_GET['webb'];
 	}
 
-	$recipie = $class_Recipies->viewRecipie(array('webb'=>$webb));
+	if(isset($_GET['id']) && !empty($_GET['id']))
+	{
+		$id = $_GET['id'];
+	}
+	
+	$recipie = $class_Recipies->viewRecipie( array('webb'=>$webb, 'id'=>$id) );
 	
 	$recipieTitle = $recipie['info']['title'];
 	

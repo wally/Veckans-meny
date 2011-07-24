@@ -23,7 +23,7 @@
 		
 		public function checkExistingRecipie($data = array())
 		{
-			$data['limit'] = 1;
+			$data['limit'] = 1;	
 			return $this->getRecipie($data);
 		}
 		
@@ -38,10 +38,12 @@
 		*/
 		public function getRecipie($data = array())
 		{
+
 			if( !(isset($data['fields']) && !empty($data['fields']) ) )
 			{
 				return false;
 			}
+			
 			
 			if( isset($data['identifier'], $data['identifierValue']) )
 			{
@@ -58,6 +60,7 @@
 				$whereSQL = '';
 			}
 			
+			
 			$limit = isset($data['limit']) ? intval($data['limit']) : 1;
 			$offset = isset($data['offset']) ? intval($data['offset']) : 0;
 			
@@ -71,7 +74,7 @@
 			$query = 'SELECT '. $fieldsSQL.' FROM '. TABLE_RECIPIES . ' '.$whereSQL.' ORDER BY '. $orderBy.' ' . $sort .' LIMIT '.$offset. ', '.$limit;
 			
 			$result = $this->db->query($query, __FILE__, __LINE__);
-			
+
 			if($result->num_rows > 0)
 			{
 				$rows = array();
@@ -109,7 +112,7 @@
 		{
 			if(count($precachedInfo) == 0)
 			{
-				$data['fields'] = 'webb,title';
+				$data['fields'] = 'id,webb,title';
 				$info = $this->getRecipie($data);
 				$link = $href = '';
 			}
@@ -126,8 +129,8 @@
 				{
 					$info['webb'] = $this->make_webbable_easy($info['title']);
 				}
-
-				$href = '/recept/'.$info['webb'].'/';
+				
+				$href = '/recept/'.$info['webb'].'/'.$info['id'].'/';
 
 				if($hrefOnly === true)
 				{
@@ -172,6 +175,32 @@
 		public function cleanFields($fields)
 		{
 			return parent::cleanFields($fields, $this->allowedRecipieIdentifiers);
+		}
+		
+		public function getRecipieType($data = array())
+		{
+			$type = 'unknown';
+			if(count($data) > 0)
+			{
+				if(isset($data['link']) && !empty($data['link']))
+				{
+					$type = 'link';
+				}
+				elseif(isset($data['portions'], $data['method'], $data['ingredients']) 
+					&& !empty($data['portions']) 
+					&& !empty($data['method']) 
+					&& !empty($data['ingredients']) 
+				)
+				{
+					$type = 'recipie';
+				}
+				
+				return $type;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 

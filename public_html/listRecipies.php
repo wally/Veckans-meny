@@ -1,7 +1,5 @@
 <?php
 	require_once('../include/core/common.php');
-
-	$_SESSION['userid'] = 29221;
 	
 	require_once( PATHS_LIBRARIES . 'recipies.view.class.php');
 	
@@ -23,7 +21,7 @@
 	}
 
 	$recipie = $class_Recipies->viewAllRecipies(array('page'=>$page));
-	
+
 	$ui_options = array();
 	
 	$ui_options['title'] = 'Recept - ';

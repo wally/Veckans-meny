@@ -585,9 +585,48 @@
 		function checkLink($link)
 		{
 			
-			$link = preg_replace('#((http://|https://|ftp://|www\.)(www\.)?)([a-z0-9\#_%\?&//=\+@\.:;-]{4,})#eis', 
-									"('$2' != 'http://' && '$2' != 'ftp://' && '$2' != 'https://') ? 'http://$1$4' : '$1$4'",	$link);
-			return preg_match('#((http://|https://|ftp://|www\.)(www\.)?)([a-z0-9\#_%\?&//=\+@\.:;-]{4,})#eis', $link);
+			$link = trim($link);
+			$validhost = true;
+		 
+			if (strpos($link, 'http://') === false && strpos($link, 'https://') === false) {
+				$link = 'http://'.$link;
+			}
+		 
+			//first check with php's FILTER_VALIDATE_URL
+			if (filter_var($link, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED) === false) {
+				$validhost = false;
+			} else {
+				//not all invalid URLs are caught by FILTER_VALIDATE_URL
+				//use our own mechanism
+		 
+				$host = parse_url($link, PHP_URL_HOST);
+				$dotcount = substr_count($host, '.');
+		 
+				//the host should contain at least one dot
+				if ($dotcount > 0) {
+					//if the host contains one dot
+					if ($dotcount == 1) {
+						//and it start with www.
+						if (strpos($host, 'www.') === 0) {
+							//there is no top level domain, so it is invalid
+							$validhost = false;
+						}
+					} else {
+						//the host contains multiple dots
+						if (strpos($host, '..') !== false) {
+							//dots can't be next to each other, so it is invalid
+							$validhost = false;
+						}
+					}
+				} else {
+					//no dots, so it is invalid
+					$validhost = false;
+				}
+			}
+		 
+			//return false if host is invalid
+			//otherwise return true
+			return $validhost;
 		}
 		
 		function create_table($form, $options=null)

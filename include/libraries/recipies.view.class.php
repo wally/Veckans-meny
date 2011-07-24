@@ -26,14 +26,16 @@
 			$options['limit'] = $this->viewLimit;
 			$options['fields'] = 'id, title, webb';
 			$options['orderBy'] = 'id';
-			
+		
 			$recipies = $this->getRecipie($options);
+
 			$numRecipies = $this->getNumRecipies();
+			
 			
 			
 			if($recipies === false)
 			{
-				$output .= $this->notice_box('Just nu finns det inga inlagda recept. <a href="/addRecipie">Lägg till ett du!</a>');
+				$output .= $this->notice_box('Just nu finns det inga inlagda recept. <a href="/recept/add/">Lägg till ett du!</a>');
 			}
 			else
 			{
@@ -45,7 +47,7 @@
 				{
 					$userRating = $this->getUserRecipieRating(array('recipieId'=>$recipieInfo['id']));
 					
-					$recipieLink = $this->createRecipieLink(array(), true, array('webb'=>$recipieInfo['webb']));
+					$recipieLink = $this->createRecipieLink(array(), true, array('webb'=>$recipieInfo['webb'], 'id'=>$recipieInfo['id']));
 					$output .= '<h2><a href="'.$recipieLink.'">'.$recipieInfo['title'].'</a></h2>'."\n";
 					
 					if($userRating['favourite'])
@@ -159,31 +161,55 @@
 		    return "<span class=\"paginate\">Page:</span><select class=\"paginate\" onchange=\"window.location='".$_SERVER['PHP_SELF']."?page='+this[this.selectedIndex].value+'&ipp=$this->items_per_page';return false\">$option</select>\n";  
 		}  
 		
-		public function viewRecipie($data = array())
+		public function viewRecipie($data = array(), $preview = false)
 		{
-			if( !(isset($data['webb']) && !empty($data['webb'])) )
+			if( !(isset($data['webb']) && !empty($data['webb'])) && !$preview)
 			{
 				header('Location: /recept/');
 				exit;
 			}
+						
+			$recipieInfo = false;
 			
-			$options = array();
-			$options['fields'] = 'id, title, added, views';
-			$options['identifier'] = 'webb';
-			$options['identifierValue'] = $data['webb'];
+			if( !$preview )
+			{
+				$options = array();
+				$options['fields'] = 'id, title, added, views';
+				$options['identifier'] = 'webb';
+				$options['identifierValue'] = $data['webb'];
+				$recipieInfo = $this->getRecipie($options);
+			}
 			
-			$recipieInfo = $this->getRecipie($options);
-			
+			//create fake info for preview
 			if($recipieInfo === false)
 			{
-				$recipieInfo = $this->createNotFoundRecipieInfo();
+				if($preview)
+				{
+					$data['webb'] = $this->make_webbable_easy($data['title']);
+					$data['added'] = date('Y-m-d H:i:s');
+					$data['id'] = 0;
+					$data['views'] = 1;
+
+					$recipieInfo = array($data);
+				}
+				else
+				{
+					 return $this->createNotFoundRecipieOutput();
+				}
 			}
 			
 			$recipieInfo[0]['webb'] = $data['webb'];
 			$recipieInfo = $recipieInfo[0];
 			$this->recipieInfo = $recipieInfo;
 			
-			$userRating = $this->getUserRecipieRating(array('recipieId'=>$recipieInfo['id']));
+			if($preview)
+			{
+				$userRating = array('rating'=>0, 'favourite'=>false);	
+			}
+			else
+			{
+				$userRating = $this->getUserRecipieRating(array('recipieId'=>$recipieInfo['id']));
+			}
 
 			$output = '';
 
@@ -195,10 +221,10 @@
 			
 			$output .= '
 		<div id="main" class="clearfix">			 
-			<div id="content" class="threeFourth clearfix"> 
+			<div class="threeFourth clearfix"> 
 							    
 			    <div class="page clearfix">';
-			/**/
+
 			$output .= '<div class="recipie-meta clearfix">';
 			
 			$output .= '<span class="recipie-left">';
@@ -241,20 +267,18 @@
 			
 			$output .= '</div>'."\n";
 			$output .= '<div class="clear"></div>';
-			/**/
 			
 				$output .= $this->displayRecipieContent();
 			
 			$output .= '</div>
-			</div>'."\n";
+			</div>
+		</div>'."\n";
 			
 			return array('output'=>$output, 'info'=>$recipieInfo);
 		}
 		
 		public function displayRecipieContent()
-		{
-			$this->preint_r($_SERVER);
-			
+		{	
 			if( !(isset($this->recipieInfo) && count($this->recipieInfo) > 0) )
 			{
 				$this->recipieInfo['recipie'] = $this->getRecipieContent();
@@ -273,14 +297,26 @@
 		}
 		
 		
-		public function createNotFoundRecipieInfo()
+		public function createNotFoundRecipieOutput()
 		{
-			$data = array();
-			$data['title'] = 'Receptet hittades inte';
-			$data['link'] = '';
-			$data['webb'] = '';
-			$data['notFound'] = true;
-			return array($data);
+			$output = '';
+
+			$output .= '<div id="pageHead">'."\n";
+			
+			$output .= '<h1>Receptet hittades inte</h1>'."\n";
+			
+			$output .= '</div>'."\n";
+			
+			$output .= '
+		<div id="main" class="clearfix">			 
+			<div class="threeFourth clearfix">
+			
+			<a href="/recept/" class="button blue">Leta efter några andra!</a>
+			
+			</div>
+		</div>';
+		
+			return array('output'=>$output, 'info'=>array('title'=>'Receptet hittades inte'));
 		}
 	}
 	
