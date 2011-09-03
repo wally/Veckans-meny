@@ -180,7 +180,7 @@
 						$content = $data['link'];
 					break;
 					case 'recipie':
-						$content = 'INGREDIENSER:'."\n".$data['ingredients']."\n\nMETOD:\n\n".$data['method'];
+						$content = $data['portions'].' portion'.($data['portions'] == 1 ? '' : 'er')."\n\n".'INGREDIENSER:'."\n".$data['ingredients']."\n\nMETOD:\n".$data['method'];
 					break;
 					default:
 						$content = '';
@@ -192,14 +192,14 @@
 				$query = '
 				INSERT INTO recipies_main(title, webb, added, addedBy) 
 				VALUES("'.$data['title'].'", "'.$webb.'", NOW(), '.$_SESSION['userid'].')';
-				$sql = $this->db->query($query, __FILE__, __LINE__);
+				$result = $this->db->query($query, __FILE__, __LINE__);
 				$id_main = $this->db->mysqli->insert_id;
+				
 				$query = '
 				INSERT INTO recipies_recipies(parentId, description, content, type) 
-				VALUES('.$id_main.', "'.$data['description'].'", "'.$content.'", "'.$recipieType.'")
+				VALUES('.$id_main.', "'.trim($data['description']).'", "'.trim($content).'", "'.$recipieType.'")
 				';
 				$result = $this->db->query($query, __FILE__, __LINE__);
-				$id_recipie = $this->db->mysqli->insert_id;
 				
 				$this->successfulAddition($webb, $id_main);
 			}
@@ -261,22 +261,20 @@
 				
 			$output .= '</div>'."\n";
 			
-			$output .= '<br /><br /><h3>Fyll i med en länk till ett recept eller med ett recept du skriver in själv</h3>'."\n";
+			$output .= '<h3>Fyll i med en länk till ett recept eller med ett recept du skriver in själv</h3>'."\n";
 			
 
 			
 			//link
 			$output .= '<div class="rounded-16 clearfix">'."\n";
-			$output .= '<h4><label for="link">Länk <span class="help" title="Länk till receptet">?</span></label></h4><input type="text" name="link" id="link" value="'.$fieldData['link'].'" '.$this->errorInlineStyle('link').' />'."\n";
+			$output .= '<h3><label for="link">Länk <span class="help" title="Länk till receptet">?</span></label></h3><input type="text" name="link" id="link" value="'.$fieldData['link'].'" '.$this->errorInlineStyle('link').' />'."\n";
 			$output .= $this->displayError('link')."\n";
 			$output .= '</div>'."\n";
 			
 			// or manual interaction
-			$output .= '<br /><br />'."\n";
-
 			
 			$output .= '<div class="rounded-16 clearfix">'."\n";
-			$output .= '<h4>Eget recept</h4>'."\n";
+			$output .= '<h3>Eget recept</h3>'."\n";
 			$output .= '<div class="clearfix">'."\n";
 			$output .= '<div style="width:520px;" class="left">'."\n";
 			$output .= '<input type="text" name="portions" id="portions" value="'.$fieldData['portions'].'" '.$this->errorInlineStyle('portions', 'noClassLeft').' style="width:15px;" /> <label for="portions">portioner</label>'."\n";

@@ -2,7 +2,246 @@
 
 	class PublicFunctions
 	{
+		//set how many items per page in the pagination
+		public $viewLimit = 15;
+	
+		public function cleanChosenRecipies($recipies = '')
+		{
+			if($recipies == '')
+			{
+				return 0;
+			}
+			
+			$recipies = explode(',', $recipies);
+			
+			$recipiesArray = array();
+			
+			if(count($recipies) > 0)
+			{
+				foreach($recipies as $recipie)
+				{
+					if(intval($recipie) > 0)
+					{
+						$recipiesArray[] = intval($recipie);
+					}
+				}
+			}
+			
+			return implode(',', $recipiesArray);
+		}
+		
+		/**
+		 * http://www.php.net/manual/en/function.wordwrap.php#74146
+		 * function wordCut($sText, $iMaxLength, $sMessage)
+		 * 
+		 * + cuts an wordt after $iMaxLength characters
+		 * 
+		 * @param  string   $sText       the text to cut
+		 * @param  integer  $iMaxLength  the text's maximum length
+		 * @param  string   $sMessage    piece of text which is added to the cut text, e.g. '...read more' 
+		 * 
+		 * @returns string
+		**/  
+		public function wordCut($sText, $iMaxLength, $sMessage='...')
+		{
+		   if (strlen($sText) > $iMaxLength)
+		   {
+		       $sString = wordwrap($sText, ($iMaxLength-strlen($sMessage)), '[cut]', 1);
+		       $asExplodedString = explode('[cut]', $sString);
+		       
+		       $sCutText = $asExplodedString[0];
+		       
+		       $sReturn = $sCutText.$sMessage;
+		   }
+		   else
+		   {
+		       $sReturn = $sText;
+		   }
+		   
+		   return $sReturn;
+		}
+		
+		public function displayPagination($page = 0, $offset = 0, $total=1, $options = array())
+		{
+			if($page < 0 || $offset < 0 || $total < 1)
+			{
+				$top = 
+'<div class="clearfix pagenavi light paginationTop">
+	<div class="left"><span class="inactive" href="#">«</span> <span class="current">1</span> <span class="inactive" href="#">»</span></div>
+</div>';
+				$bottom = 
+'<div class="clearfix pagenavi light paginationBottom">
+	<div class="left"><span class="inactive" href="#">«</span> <span class="current">1</span> <span class="inactive" href="#">»</span></div>
+</div>';		
 
+				return array('top'=>$top, 'bottom'=>$bottom);
+			}
+			
+			$this->page = abs($page);
+			$this->items_per_page = $this->viewLimit;
+			$this->items_total = $total;
+			$options['baseHref'] = isset($options['baseHref']) ? $options['baseHref'] : '';
+			return $this->paginate($options);
+		}
+		
+		function paginate($options = array())
+	    {
+	    	$this->ipp = $this->default_ipp = $this->viewLimit;
+	    	$this->sortBy = isset($_GET['sortBy']) && array_key_exists(strtolower($_GET['sortBy']), $this->allowedsortBy) ? strtolower($_GET['sortBy']) : 'added';
+	    	$this->order = isset($_GET['order']) && in_array(strtoupper($_GET['order']), array('ASC', 'DESC')) ? strtoupper($_GET['order']) : 'DESC';
+
+	        
+	        $this->query_string_parts = array();
+	        $this->query_string = '';
+	        
+	        if(count($_GET) > 0)
+	        {
+	        	foreach($_GET as $key=>$value)
+	        	{
+	        		if($key != 'page')
+	        		{
+	        			$this->query_string_parts[] = $key.'='.$value;
+	        		}
+	        	}
+	        }
+			
+			if(count($this->query_string_parts) > 0)
+			{
+				$this->query_string = '?'.implode('&', $this->query_string_parts);
+			}    	
+	        if(!is_numeric($this->items_per_page) || $this->items_per_page <= 0)
+	        {
+	        	$this->items_per_page = $this->default_ipp;  
+			}
+	        
+	        $this->return = 'Sidor: ';
+	        
+	        $this->num_pages = ceil($this->items_total/$this->items_per_page);  
+	        $this->mid_range = 2;
+	        $this->current_page = $this->page; // must be numeric > 0
+	        if($this->current_page < 1 Or !is_numeric($this->current_page)) $this->current_page = 1;  
+	        if($this->current_page > $this->num_pages) $this->current_page = $this->num_pages;  
+	        $prev_page = $this->current_page-1;  
+	        $next_page = $this->current_page+1;
+
+        	$this->return = ($this->current_page != 1 And $this->items_total >= 10) ? "<a class=\"paginate\" href=\"".$options['baseHref']."$prev_page/$this->query_string\">«</a> ":"<span class=\"inactive\" href=\"#\">«</span> ";
+        	
+	        if($this->num_pages > 10)  
+	        {
+	            $this->start_range = $this->current_page - floor($this->mid_range/2);  
+	            $this->end_range = $this->current_page + floor($this->mid_range/2);  
+	  
+	            if($this->start_range <= 0)  
+	            {  
+	                $this->end_range += abs($this->start_range)+1;  
+	                $this->start_range = 1;  
+	            }  
+	            if($this->end_range > $this->num_pages)  
+	            {  
+	                $this->start_range -= $this->end_range-$this->num_pages;  
+	                $this->end_range = $this->num_pages;  
+	            }  
+	            $this->range = range($this->start_range,$this->end_range);  
+	  
+	            for($i=1;$i<=$this->num_pages;$i++)  
+	            {  
+	                if($this->range[0] > 2 And $i == $this->range[0]) $this->return .= "<span style='background:none;'> ... </span>";  
+	                // loop through all pages. if first, last, or in range, display  
+	                if($i==1 Or $i==$this->num_pages Or in_array($i,$this->range))  
+	                {  
+	                    $this->return .= ($i == $this->current_page) ? "<a title=\"Gå till sida $i av $this->num_pages\" class=\"current\" href=\"#\">$i</a> ":"<a class=\"paginate\" title=\"Gå till sida $i av $this->num_pages\" href=\"".$options['baseHref']."$i/$this->query_string\">$i</a> ";  
+	                }  
+	                if($this->range[$this->mid_range-1] < $this->num_pages-1 And $i == $this->range[$this->mid_range-1]) $this->return .= "<span style='background:none;'> ... </span>";  
+	            }
+	        }  
+	        else  
+	        {
+	            for($i=1;$i<=$this->num_pages;$i++)  
+	            {  
+	                $this->return .= ($i == $this->current_page) ? "<span class=\"current\">$i</span> ":"<a class=\"paginate\" href=\"".$options['baseHref']."$i/".$this->query_string."\">$i</a> ";  
+	            }
+	        }
+			
+			$this->return .= (($this->current_page != $this->num_pages And $this->items_total >= 10)) ? "<a class=\"paginate\" href=\"".$options['baseHref']."$next_page/$this->query_string\">»</a>\n":"<span class=\"inactive\" href=\"#\">»</span>\n";
+	        $this->low = ($this->current_page-1) * $this->items_per_page;  
+	        $this->high = ($this->page == -1) ? $this->items_total:($this->current_page * $this->items_per_page)-1;  
+	        $this->limit = ($this->page == -1) ? "":" LIMIT $this->low,$this->items_per_page";
+	        
+	        $classTop = 'paginationTop';
+	        $classBottom = 'paginationBottom';
+
+	        $output = '<div class="clearfix pagenavi light ';
+	        
+	        $return['top'] = $output . $classTop;
+	        $return['bottom'] = $output . $classBottom;
+	        
+	        
+	        $output = '"><div class="left">'.$this->return.'</div>';
+	        $output .= $this->display_sortBy_menu($options);
+	        $output .= '</div>';
+	        
+	        $return['top'] .= $output;
+	        $return['bottom'] .= $output;
+	        
+	        return $return;
+	    }  
+    
+		public function display_sortBy_menu( $options = array() )
+		{
+			$output = '';
+			$output .= '<div class="right">'."\n";
+				
+				if(isset($options['button']))
+				{
+					$output .= '<a href="'.$options['button']['href'].'" class="button">'.$options['button']['title'].'</a>'."\n";
+				}
+				
+				if(isset($this->allowedsortBy))
+				{			
+					$output .= '<button class="sortingOptions-button button gray">Visa alternativ</button>'."\n";
+					$output .= '<div class="sortingOptions-container hide">'."\n";
+
+						$output .= '<form method="get" action="'.$options['baseHref'].($this->current_page > 1 ? $this->current_page.'/' : '' ).'" id="recipie-sortBy">'."\n";
+							$output .= '<select name="sortBy">'."\n";
+								
+								foreach($this->allowedsortBy as $value=>$text)
+								{
+									$output .= '<option value="'.$value.'"';
+									
+									if($this->sortBy == $value)
+									{
+										$output .= ' selected="selected"';
+									}
+									$output .= '>';
+									
+									$output .= $text.'</option>'."\n";
+								}
+							$output .= '</select>'."\n";
+							$output .= '<select name="order">'."\n";
+								
+								foreach(array('asc'=>'Stigande (A-Ö)', 'desc'=>'Fallande (Ö-A)') as $value=>$text)
+								{
+									$output .= '<option value="'.$value.'"';
+									
+									if(strtolower($this->order) == $value)
+									{
+										$output .= ' selected="selected"';
+									}
+									$output .= '>';
+									
+									$output .= $text.'</option>'."\n";
+								}
+							$output .= '</select>'."\n";
+	
+							$output .= '<input type="submit" value="Ok" class="gray" />'."\n";
+						$output .= '</form>'."\n";
+					$output .= '</div>'."\n";
+				}
+			$output .= '</div>'."\n";
+			
+			return $output;
+		}
+		
 		public function checkLogin($redirect = true)
 		{
 
@@ -67,7 +306,7 @@
 			return false; 
 		}
 		
-		public function cleanFields($fields, $allowedFields)
+		public function cleanFields($fields, $allowedFields = array())
 		{			
 			$fields = preg_replace('/([^a-zA-Z0-9\_\-\,*])/', '', $fields);
 			$fields = explode(',', $fields);
@@ -86,7 +325,15 @@
 			return $validFields;
 		}
 		
-		public function displaySuccessMessage()
+		public function bbcode($text = '')
+		{
+			$text = trim($text);
+			$text = nl2br($text);
+			
+			return $text;
+		}
+		
+		public function displaySuccessMessage($text = '')
 		{
 			return '<div class="success">'.$text.'</div>';
 		}

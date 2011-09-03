@@ -1,0 +1,215 @@
+
+
+table.jCalendar {
+	background: #aaa;
+	border-spacing: 0;
+    border-collapse: separate;
+    width: 230px;
+}
+table.jCalendar thead tr th
+{
+	background: #bbc url(/images/calendar-sprite.png) no-repeat 0 -200px;
+	border-bottom: 1px solid rgba(186, 194, 200, 0.6);
+	height: 20px;
+	width: 32px;
+}
+
+table.jCalendar thead tr th:nth-child(2)
+{
+	background-position: -33px -200px; 
+}
+
+table.jCalendar thead tr th:nth-child(3)
+{
+	background-position: -66px -200px; 
+}
+
+table.jCalendar thead tr th:nth-child(4)
+{
+	background-position: -100px -200px; 
+}
+
+table.jCalendar thead tr th:nth-child(5)
+{
+	background-position: -133px -200px; 
+}
+
+table.jCalendar thead tr th:nth-child(6)
+{
+	background-position: -165px -200px; 
+} 
+
+table.jCalendar thead tr th:nth-child(7)
+{
+	background-position: -198px -200px; 
+}
+
+table.jCalendar th {
+	color: #fff;
+	font-weight: bold;
+	width: 32px;
+	height: 20px;
+	text-indent: -9999px;
+}
+table.jCalendar td {
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+	border: 1px solid rgba(222, 222, 222, 0.5);
+	background: #f0f4f7;
+	color: #6c7174;
+	text-align: center;
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+table.jCalendar td.other-month {
+	color: rgba(108, 113, 116, 0.3);
+}
+table.jCalendar td.today {
+	background: #666;
+	color: #fff;
+	box-shadow: none;
+}
+table.jCalendar td.selected {
+	background: #f66;
+	color: #fff;
+}
+table.jCalendar td.selected.dp-hover {
+	background: #f33;
+	color: #fff;
+}
+table.jCalendar td.dp-hover,
+table.jCalendar tr.activeWeekHover td {
+	background: #e7e9ea;
+	border: 1px solid rgba(214, 219, 221, 0.68);
+}
+table.jCalendar tr.selectedWeek td {
+	background: #a4d143;
+	border: 1px solid rgba(121, 188, 27, 0.68);	
+	box-shadow: none;
+	text-shadow: 0 -1px 0 rgba(48, 51, 43, 0.4);
+	color: #fff;
+}
+table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
+	background: #bbb;
+	color: #888;
+}
+table.jCalendar td.unselectable,
+table.jCalendar td.unselectable:hover,
+table.jCalendar td.unselectable.dp-hover {
+	background: #bbb;
+	color: #888;
+}
+
+/* For the popup */
+
+/* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
+
+div.dp-popup {
+	background: transparent url(/images/calendar-sprite.png) no-repeat 0 0;
+	position: relative;
+	font-size: 13px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	width: 230px;
+	line-height: 1.2em;
+	box-shadow: 1px 1px 6px rgba(35, 47, 57, 0.6);
+}
+div#dp-popup {
+	position: absolute;
+	z-index: 199;
+}
+div.dp-popup h2 {
+	color: #fff;
+	text-shadow: 1px 0 0 #fff;
+	font-size: 17px;
+	letter-spacing: 1px;
+	text-align: center;
+	height: 23px;
+	margin: 13px 0 2px;
+	padding: 0;
+}
+a#dp-close {
+	font-size: 11px;
+	padding: 4px 0;
+	text-align: center;
+	display: block;
+}
+a#dp-close:hover {
+	text-decoration: underline;
+}
+div.dp-popup a {
+	color: #000;
+	text-decoration: none;
+	padding: 3px 2px 0;
+}
+div.dp-popup div.dp-nav-prev {
+	position: absolute;
+	top: 2px;
+	left: 4px;
+	width: 100px;
+}
+div.dp-popup div.dp-nav-prev a {
+	float: left;
+	background: transparent url(/images/calendar-sprite.png) no-repeat 25px -100px;
+	height: 38px;
+	text-indent: -9999px;
+	width: 17px;
+	margin-top: -2px;
+	padding-left: 23px;
+	padding-right: 2px;
+}
+/* Opera needs the rules to be this specific otherwise it doesn't change the cursor back to pointer after you have disabled and re-enabled a link */
+div.dp-popup div.dp-nav-prev a, div.dp-popup div.dp-nav-next a {
+	cursor: pointer;
+}
+div.dp-popup div.dp-nav-prev a.disabled, div.dp-popup div.dp-nav-next a.disabled {
+	cursor: default;
+}
+div.dp-popup div.dp-nav-next {
+	position: absolute;
+	top: 2px;
+	right: 4px;
+	width: 100px;
+}
+div.dp-popup div.dp-nav-next a {
+	background: transparent url(/images/calendar-sprite.png) no-repeat -100px -100px;
+	float: right;
+	height: 38px;
+	text-indent: -9999px;
+	width: 39px;
+	margin-top: -2px;
+}
+div.dp-popup a.disabled {
+	cursor: default;
+	color: #aaa;
+}
+div.dp-popup td {
+	cursor: pointer;
+}
+div.dp-popup td.disabled {
+	cursor: default;
+}
+/* located in demo.css and creates a little calendar icon
+ * instead of a text link for "Choose date"
+ */
+a.dp-choose-date {
+	float: left;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 10px 3px 0;
+	display: block;
+	text-indent: -2000px;
+	overflow: hidden;
+	background: url(/images/calendar.png) no-repeat; 
+}
+a.dp-choose-date.dp-disabled {
+	background-position: 0 -20px;
+	cursor: default;
+}
+/* makes the input field shorter once the date picker code
+ * has run (to allow space for the calendar icon
+ */
+input.dp-applied {
+	width: 140px;
+	float: left;
+}

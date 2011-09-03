@@ -10,11 +10,30 @@ RewriteRule ^recept$ /recept/ [R=301,L]
 
 RewriteRule ^recept/$ listRecipies.php [L]
 RewriteRule ^recept/([0-9]+)$ recept/$1/ [R=301,L]
-RewriteRule ^recept/([0-9]+)/$ listRecipies.php?page=$1 [L]
+RewriteRule ^recept/([0-9]+)/$ listRecipies.php?page=$1 [QSA,L]
 
 RewriteRule ^recept/add$ recept/add/ [R=301,L]
 RewriteRule ^recept/add/$ addRecipie [L]
 RewriteRule ^addRecipie$ addRecipie.php [L]
 
-RewriteRule ^recept/([a-z\-]+)/[0-9]+$ recept/$1/$2/ [R=301,L]
-RewriteRule ^recept/([a-z\-]+)/([0-9]+)/$ viewRecipie.php?webb=$1&id=$2 [L]
+RewriteRule ^recept/([a-z0-9\-]+)/[0-9]+$ recept/$1/$2/ [R=301,L]
+RewriteRule ^recept/([a-z0-9\-]+)/([0-9]+)/$ viewRecipie.php?webb=$1&id=$2 [L]
+
+RewriteRule ^veckans-meny$ /veckans-meny/ [R=301,L]
+RewriteRule ^veckans-meny/$ weeksMenu.php [L]
+
+RewriteRule ^veckans-meny/([0-9]+)$ veckans-meny/$1/ [R=301,L]
+RewriteRule ^veckans-meny/([0-9]+)/$ weeksMenu.php?page=$1 [QSA,L]
+
+RewriteRule ^veckans-meny/([a-z0-9\-]+)/[0-9]+$ veckans-meny/$1/$2/ [R=301,L]
+RewriteRule ^veckans-meny/([a-z0-9\-]+)/([0-9]+)/$ weeksMenu.php?webb=$1&id=$2 [L]
+
+RewriteRule ^veckans-meny/add$ veckans-meny/add/ [R=301,L]
+RewriteRule ^veckans-meny/add/$ addWeeksMenu.php [L]
+
+RewriteRule ^sok$ sok/ [R=301,L]
+RewriteRule ^sok/$ search.php [QSA,L]
+RewriteRule ^sok/([0-9]+)$ sok/$1/ [R=301,QSA,L]
+RewriteRule ^sok/([0-9]+)/$ search.php?page=$1 [QSA,L]
+
+RewriteRule ^ajax-gateways/([a-zA-Z0-9\-]+)/$ ajax-gateways/$1.php [L]

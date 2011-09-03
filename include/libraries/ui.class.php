@@ -6,6 +6,8 @@
 		
 		public function __construct($options = null)
 		{
+			global $menu;
+			$this->menu = $menu;
 			$this->ui_options = $options;
 		}
 		
@@ -25,7 +27,7 @@
 			
 			$this->ui_options['noMenu'] = (isset($this->ui_options['noMenu'])) ? $this->ui_options['noMenu'] : false;
 			
-			$this->ui_options['menu'] = (isset($this->ui_options['menu']) ? (is_array($this->ui_options['menu']) ? $this->ui_options['menu'] : array($this->ui_options['menu'])) : array('name'=>''));
+			$this->ui_options['menu'] = (isset($this->ui_options['menu']) ? $this->ui_options['menu'] : 'home');
 
 			//robots
 			$this->ui_options['meta_robots'] = (isset($this->ui_options['meta_robots']) ? $this->ui_options['meta_robots'] : 'index,follow');
@@ -34,12 +36,13 @@
 
 			//javascript
 			$this->ui_options['javascripts'] = (isset($this->ui_options['javascripts']) ? $this->ui_options['javascripts'] : array());
-			array_unshift($this->ui_options['javascripts'], 'https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js', '/javascript/main.js', 'http://themetrust.com/demos/craft/wp-content/themes/craft/scripts/jquery.jcarousel.min.js?ver=0.2.7', 'http://users.tpg.com.au/j_birch/plugins/superfish/js/superfish.js', 'http://themetrust.com/demos/craft/wp-content/themes/craft/scripts/superfish/supersubs.js?ver=1.4.8', 'http://themetrust.com/demos/craft/wp-content/themes/craft/scripts/slideshow/jquery.nivo.slider.pack.js?ver=2.4');
+			//array_unshift($this->ui_options['javascripts'], 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js', '/javascript/main.js', 'http://users.tpg.com.au/j_birch/plugins/superfish/js/superfish.js', 'http://themetrust.com/demos/craft/wp-content/themes/craft/scripts/superfish/supersubs.js?ver=1.4.8', 'http://themetrust.com/demos/craft/wp-content/themes/craft/scripts/slideshow/jquery.nivo.slider.pack.js?ver=2.4');
+			$this->ui_options['javascripts'] = array('/javascript/jquery-1.6.2.min.js', '/javascript/date.js', '/javascript/date_se.js', '/javascript/jquery.datePicker.js', '/javascript/jquery.bxSlider.min.js', '/javascript/jquery.fancybox-1.3.4.pack.js', '/javascript/jquery.placeholder.min.js', '/javascript/main.js');
 			$this->ui_options['javascripts'] = array_unique($this->ui_options['javascripts']);
 			
 			//stylesheets
 			$this->ui_options['stylesheets'] = isset($this->ui_options['stylesheets']) ? $this->ui_options['stylesheets'] : array();
-			array_unshift($this->ui_options['stylesheets'], '/css/style.css', '/css/superfish.css', '/css/nivo-slider.css', '/css/custom-nivo-slider.css');
+			array_unshift($this->ui_options['stylesheets'], '/css/style.css', '/css/superfish.css', '/css/nivo-slider.css', '/css/custom-nivo-slider.css', '/css/datePicker.css', '/bx_styles/bx_styles.css', '/css/pagenavi-css.css', '/css/jquery.fancybox-1.3.4.css');
 	
 
 			$output .= '
@@ -49,9 +52,6 @@
 <head> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 	<title>'. $this->ui_options['title'] .'</title>
-	
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" />
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" /> 
 	';
 		
 			if(count($this->ui_options['stylesheets']) > 0)
@@ -80,7 +80,7 @@
 			$output .= (isset($this->ui_options['body_extra'])) ? "\t".'<body ' . $this->ui_options['body_extra']  . "\n" : "\t".'<body ';
 			$output .= 'class="bkgConcrete';
 			
-			if($this->ui_options['menu']['name'] == 'start')
+			if($this->ui_options['menu'] == 'home')
 			{
 				$output .= ' home';
 			}
@@ -99,13 +99,7 @@
 				
 				<div id="mainNav">
 					<div class="menu-main-menu-container">
-						<ul id="menu-main-menu" class="sf-menu">
-							<li class="menu-item current-menu-item"><a href="/">Hem</a></li> 
-							<li class="menu-item"><a href="/veckans-meny/">Veckans meny</a></li> 
-							<li class="menu-item"><a href="/recept/">Recept</a></li> 
-							<li class="menu-item"><a href="/teman7">Teman</a></li> 
-							<li class="menu-item"><a href="/om-oss/">Om oss</a></li>  
-						</ul>
+							'.$this->generateMenu().'
 					</div>			
 				</div>	
 			</div>		
@@ -125,30 +119,42 @@
 			}
 		}
 		
+		public function generateMenu()
+		{
+			$output = '<ul id="menu-main-menu" class="sf-menu">';
+			
+			if(count($this->menu) > 0)
+			{
+				foreach($this->menu as $handle=>$menuItem)
+				{
+					$output .= '<li class="menu-item';
+					
+					if($handle == $this->ui_options['menu'])
+					{
+						$output .= ' current-menu-item';
+					}
+					$output .= '">'."\n";
+					
+					$output .= '<a href="'.$menuItem['href'].'" title="'.$menuItem['title'].'">'.$menuItem['label'].'</a></li>'."\n";
+				}
+			}
+			$output .= '</ul>'."\n";
+			
+			return $output;
+		}
+		
 		public function sidebar()
 		{
+			require_once( PATHS_LIBRARIES . 'recipies.class.php' );
+			
+			$this->classes->recipies = new Recipies();
+			
 			$this->sidebar['title'] = 'Andra recept';
 			$this->sidebar['numSummary'] = 1;
 			$this->sidebar['maxItems'] = 6;
 			
-			$this->sidebar['items'][] = array('url'=>'/recept/2/', 'text'=>'Hejsan', 'meta'=>'3 apr, 2011', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
+			$this->sidebar['items'] = $this->classes->recipies->getSidebarItems( array('limit'=>$this->sidebar['maxItems']) );
 			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-			
-			$this->sidebar['items'][] = array('url'=>'/recept/3/', 'text'=>'En till item', 'summary'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget quam orci. Quisque porta varius dui, quis posuere nibh mollis quis. Mauris commodo rhoncus porttitor. Maecenas et euismod elit. Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin. Vivamus sagittis ...');
-
 			$output = '';
 			$output .= '
 			
@@ -158,7 +164,9 @@
 			<div id="ttrust_recent_posts-3" class="oneHalf oneFourth ttrust_recent_posts sidebarBox widgetBox">';
 			
 			$output .= '<h3>'.$this->sidebar['title'].'</h3>'."\n";
-
+			
+			$output .= '<ul>'."\n";
+			
 			if(count($this->sidebar['items']) > 0)
 			{
 				foreach($this->sidebar['items'] as $i=>$item)
@@ -170,30 +178,37 @@
 					
 					$class = ($i == 0 ? 'firstPost' : 'secondaryPost');
 					
-					if(!isset($item['summary']))
+					if(!isset($item['description']))
 					{
-						$item['summary'] = '';
+						$item['description'] = '';
 					}
 					
-					if(!isset($item['meta']))
+					if(!isset($item['added']))
 					{
-						$item['meta'] = strftime('%e %b, %Y');
+						$item['added'] = date('Y-m-d H:i:s');
 					}
+					
+					$item['added'] = strftime('%e %b, %Y', strtotime( $item['added'] ) );;
+					$item['added'] = strtolower($item['added']);
+					
+					$item['url'] = $this->classes->recipies->createRecipieLink(null, false, $item);
 					
 					$output .= '
-				<div class="'.$class.'">
-					<h2><a href="'.$item['url'].'" title="'.$item['text'].'">'.$item['text'].'</a></h2> 
-					<span class="meta">'.$item['meta'].'</span>';
+				<li class="'.$class.'">
+					<h2>'.$item['url'].'</h2> 
+					<span class="meta">'.$item['added'].'</span>';
 
-					if(!empty($item['summary']) && ($i-$this->sidebar['numSummary'] < 0))
+					if(!empty($item['description']) && ($i-$this->sidebar['numSummary'] < 0))
 					{
-						$output .= '<p>'.$item['summary'].'</p>'."\n";
+						
+						$output .= '<p>'.$this->wordCut($item['description'], 100, '...').'</p>'."\n";
 					}
 					
-					$output .= '</div>'."\n";
+					$output .= '</li>'."\n";
 														
 				}
 			}
+			$output .= '</ul>'."\n";
 			
 			$output .= '
 													
@@ -220,9 +235,15 @@
 				
 			<div class="oneFourth widget_ttrust_flickr footerBox widgetBox">				
 				
-				<h3>Flickr Feed</h3>				
-    			<div id="flickrBox" class="clearfix">
-    			
+				<h3>Länkar</h3>				
+    			<div class="clearfix">
+    				<ul>
+    					<li><a href="/">Hem</a></li>
+    					<li><a href="/veckans-meny/">Menyer</a></li>
+    					<li><a href="/recept/">Recept</a></li>
+    					<li><a href="/teman/">Teman</a></li>
+    					<li><a href="/om-oss/">Om oss</a></li>
+    				</ul>
     			</div> 
   
 			</div>
@@ -236,10 +257,10 @@
 			</div>
 			<div id="text-3" class="oneFourth footerBox widgetBox">
 
-				<h3>About Craft</h3>
-				<div class="textwidget"><p>Nulla facilisi. Vivamus lacus libero, ultrices non ullamcorper ac, tempus sit amet enim. Suspendisse at semper ipsum. Suspendisse sagittis diam a massa viverra sollicitudin ultrices non ullamcorper tempus.</p> 
-<p><a href="http://themetrust.com/demos/craft/?page_id=41" target="_parent" class="button ">Learn More</a></p> 
-				</div> 
+				<h3>Om veckans meny</h3>
+				<div class="textwidget"><p>Veckans meny startades sommaren 2011 av Waldemar Axdorph för att han ville ha ett bra sätt att få sin veckomeny gjord utan för mycket arbete. Sidan innehåller just nu över 40 recept och blir bättre för varje dag som går.</p> 
+<p><a href="/om-oss/" class="button ">Läs mer</a></p> 
+				</div>
 
 			</div>
 			
@@ -254,8 +275,7 @@
 			<div class="right">&lt;3</div>
 		</div><!-- end footer secondary-->		
 				
-	</div><!-- end footer -->	
-</div><!-- end container -->
+	</div><!-- end footer -->
 ';
 
 			if(count($this->ui_options['javascripts']) > 0)

@@ -6,6 +6,7 @@
 	$ui_options = array();
 	
 	$ui_options['title'] = 'Lägg till recept - ';
+	$ui_options['menu'] = 'recipies';
 	
 	$class_Recipies = new RecipiesAdd();
 	

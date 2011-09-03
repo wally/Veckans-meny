@@ -24,8 +24,7 @@
 	$ui_options = array();
 	
 	$ui_options['title'] = $recipieTitle.' - ';
-	
-	$ui_options['menu']['name'] = 'recipie';
+	$ui_options['menu'] = 'recipies';
 	
 	$class_UI = new UI($ui_options);
 	$class_UI->top();
