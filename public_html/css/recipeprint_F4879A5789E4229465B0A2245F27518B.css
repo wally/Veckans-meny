@@ -1,0 +1,101 @@
+﻿@media print {
+	.recipeSearchWide,#recipeRating,.recipeActions,.recipeCommentsHolder,.contactInfo,.contactInfo,.footerBottomLinks li,#selectNumberOfServings+.dropdown,#relatedRecipesPushArea,.recipeSponsorPushes {
+		display:none!important;
+	}
+	
+	html {
+		font-size:1.2em;
+	}
+	
+	.recipeHeader {
+		border-top:none;
+	}
+	
+	.recipeShadow {
+		transform:none!important;
+		-webkit-transform:none!important;
+		background:none;
+	}
+	
+	.recipeHeader .foodpic img {
+		width:335px!important;
+		height:277px!important;
+	}
+	
+	#howTo {
+		margin-right:0;
+	}
+	
+	.facts {
+		width:560px!important;
+	}
+	
+	.recipeHeader .foodpic {
+		width:325px!important;
+		height:267px!important;
+	}
+	
+	.recipeHeader h1 {
+		font-size:2.3em!important;
+	}
+	
+	#ingredients li span {
+		line-height:18px!important;
+	}
+	
+	#ingredients,#ingredientsHeader {
+		width:300px;
+	}
+	
+	.grid_6.alpha.noBackground {
+		width:550px;
+	}
+	
+	.mainFooter2 {
+		border-top:1px solid #ccc;
+		padding-top:20px;
+	}
+	
+	.nutritionParameters {
+		margin-top:20px;
+	}
+	
+	.grid_8.top {
+		width:600px;
+	}
+	
+	.footerLeftSection {
+		float:right!important;
+		width:72px!important;
+	}
+	
+	.topContainer {
+		width:570px!important;
+	}
+	
+	.footerRightSection {
+		float:left;
+		height:50px;
+	}
+	
+	.footerBottomLinks {
+		margin-top:22px;
+		float:left!important;
+	}
+	
+	.footerBottomLinks:after {
+		content:"Fler recept hittar du på ICA.se";
+	}
+	
+	.recipeHeader {
+		margin-bottom:50px;
+	}
+	
+	.top {
+		margin-bottom:20px;
+	}
+	
+	.recipeBody,.recipeBodyBg {
+		width:940px!important;
+	}
+}

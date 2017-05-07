@@ -1,4 +1,8 @@
 <?php
+
+	ini_set( 'session.hash_function', 'sha512' );
+	ini_set( 'session.hash_bits_per_character', 4 );
+	
 	session_start();
 	header('Content-Type: text/html; charset=UTF-8');
 	
@@ -22,6 +26,8 @@
 
 		
 	//error_reporting(E_ERROR);
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 	ob_start();
 	
@@ -53,20 +59,19 @@
 
 	define('CORE_PATH', substr(__FILE__, 0, strrpos(__FILE__, '/')+1));
 
-  require_once(CORE_PATH . 'constants.php');
-  
+	require_once(CORE_PATH . 'constants.php');
 	
-  // These classes are loaded by default, from /include/libraries/xxx.lib.php.
-  foreach(array(
-  	'public-functions',
-	'ui'
-  ) as $library)
-  {
-	  require_once(PATHS_LIBRARIES . $library . '.class.php');
+	// These classes are loaded by default, from /include/libraries/xxx.lib.php.
+	foreach(array(
+		'public-functions',
+		'CombineFiles',
+		'ui'
+	) as $library)
+	{
+		require_once(PATHS_LIBRARIES . $library . '.class.php');
 	}	
-	
+
 	require_once('db-config.php');
-	$class_DB = new DB();
 	
 	/* Include all config files */
 	$dir = opendir(PATHS_CONFIGS);

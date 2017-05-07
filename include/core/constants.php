@@ -36,8 +36,25 @@
 
 	$loglevel_names = array( 0 => 'error', 1 => 'warning', 2 => 'info', 3 => 'debug');
 
-	define('TABLE_RECIPIES', 'recipies_main');
-	define('TABLE_MENUS', 'recipies_menus');
-	define('TABLE_MENUS_REL', 'recipies_menus_rel');
-	
+	define('TABLE_INGREDIENTTYPES', 'IngredientTypes');
+	define('TABLE_INGREDIENTS', 'Ingredients');
+	define('TABLE_MEMBERSHIPS', 'Memberships');
+	define('TABLE_MEMBERSHIPSUSERS', 'MembershipsUsers');
+	define('TABLE_MENUTAGS', 'MenuTags');
+	define('TABLE_MENUS', 'Menus');
+	define('TABLE_OPTIONS', 'Options');
+	define('TABLE_PRIVILEGEGROUP', 'PrivilegeGroup');
+	define('TABLE_PRIVILEGEGROUPPRIVILEGES', 'PrivilegeGroupPrivileges');
+	define('TABLE_PRIVILEGEGROUPUSERS', 'PrivilegeGroupUsers');
+	define('TABLE_PRIVILEGES', 'Privileges');
+	define('TABLE_PRIVILEGESUSERS', 'PrivilegesUsers');
+	define('TABLE_RECIPETYPES', 'RecipeTypes');
+	define('TABLE_RECIPETYPESRECIPES', 'RecipeTypesRecipes');
+	define('TABLE_RECIPES', 'Recipes');
+	define('TABLE_RECIPESFAVOURITES', 'RecipesFavourites');
+	define('TABLE_RECIPESINGREDIENTS', 'RecipesIngredients');
+	define('TABLE_RECIPESMENU', 'RecipesMenu');
+	define('TABLE_RECIPESTAGS', 'RecipesTags');
+	define('TABLE_TAGS', 'Tags');
+	define('TABLE_USERS', 'Users');	
 ?>

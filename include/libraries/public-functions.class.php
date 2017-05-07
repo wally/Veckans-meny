@@ -4,6 +4,12 @@
 	{
 		//set how many items per page in the pagination
 		public $viewLimit = 15;
+		public $db;
+		
+		public function __construct()
+		{
+			$this->db = new DB();
+		}
 	
 		public function cleanChosenRecipies($recipies = '')
 		{
@@ -198,7 +204,7 @@
 				
 				if(isset($this->allowedsortBy))
 				{			
-					$output .= '<button class="sortingOptions-button button gray">Visa alternativ</button>'."\n";
+					$output .= '<button class="sortingOptions-button button gray">+</button>'."\n";
 					$output .= '<div class="sortingOptions-container hide">'."\n";
 
 						$output .= '<form method="get" action="'.$options['baseHref'].($this->current_page > 1 ? $this->current_page.'/' : '' ).'" id="recipie-sortBy">'."\n";
@@ -995,6 +1001,77 @@
 		{
 			$salt = 'dasajkdasadssjk12983üjskda9291‘‘12-123dsad21(8221[]©20121382LsamA_**^!?"#2931lkömdsdwoj==(äm"#7]129138kLÖAKSÖdsad21j13iud8©8238¨¨¨`211-2.-218283210412Nnalsˆœ]29u213nassdASIPOIADJK)="3982139Nn2}n2i1@ü@©üœœ@';
 			return sha1(base64_encode($text).crypt($text, $salt));
+		}
+		
+		public function getOption( $option = '' )
+		{
+			if( empty( $option ) )
+			{
+				return null;
+			}
+			
+			return 'a:2:{s:10:"javascript";s:3:"0.1";s:3:"css";s:3:"0.1";}';
+			
+			$query = 'SELECT * FROM '. TABLE_OPTIONS . ' WHERE Field = %s LIMIT 1';
+			
+			$result = $this->db->query( $query, $option, __FILE__, __LINE__ );
+
+			if($result->num_rows > 0)
+			{
+				$rows = array();
+				while($row = $result->fetch_assoc())
+				{
+					$rows[] = $row;
+				}
+				return $rows[0];
+			}
+			else
+			{
+				return null;
+			}
+		}
+		
+
+		/**
+		 * Prepares arrays of value/format pairs as passed to wpdb CRUD methods.
+		 *
+		 * @since 4.2.0
+		 * @access protected
+		 *
+		 * @param array $data   Array of fields to values.
+		 * @param mixed $format Formats to be mapped to the values in $data.
+		 * @return array Array, keyed by field names with values being an array
+		 *               of 'value' and 'format' keys.
+		 */
+		protected function process_field_formats( $data, $format ) {
+			$formats = $original_formats = (array) $format;
+	
+			foreach ( $data as $field => $value ) {
+				$value = array(
+					'value'  => $value,
+					'format' => '%s',
+				);
+	
+				if ( ! empty( $format ) ) {
+					$value['format'] = array_shift( $formats );
+					if ( ! $value['format'] ) {
+						$value['format'] = reset( $original_formats );
+					}
+				} elseif ( isset( $this->field_types[ $field ] ) ) {
+					$value['format'] = $this->field_types[ $field ];
+				}
+	
+				$data[ $field ] = $value;
+			}
+	
+			return $data;
+		}
+		
+		public function getthedate( $date = "now", $dateFormat = 'Y-m-d H:i:s' )
+		{
+			$tz = new DateTimeZone( 'Europe/Stockholm' );
+			$date = new DateTime( $date, $tz);
+			return $date->format( $dateFormat );
 		}
 	}
 ?>

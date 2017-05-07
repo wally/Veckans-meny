@@ -36,4 +36,4 @@ RewriteRule ^sok/$ search.php [QSA,L]
 RewriteRule ^sok/([0-9]+)$ sok/$1/ [R=301,QSA,L]
 RewriteRule ^sok/([0-9]+)/$ search.php?page=$1 [QSA,L]
 
-RewriteRule ^ajax-gateways/([a-zA-Z0-9\-]+)/$ ajax-gateways/$1.php [L]
+RewriteRule ^ajax-gateways/([a-zA-Z0-9\-]+)/?$ ajax-gateways/$1.php [QSA,L]

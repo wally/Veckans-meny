@@ -324,7 +324,7 @@
 				
 				$output .= '<div class="top-banner">'."\n";
 					$output .= '<form action="/veckans-meny/add/" method="post">'."\n";
-					$output .= 'Ser det inte rätt ut? <button type="submit" name="action" value="edit" class="button blue">Gå tillbaka och ändra</button> eller <button type="submit" name="action" value="add" class="button green">Bekräfta och lägg till menyn</button>. <!--<a href="#" class="close">Stäng</a>-->'."\n";
+					$output .= 'Ser det inte rätt ut? <button type="submit" name="action" value="edit" class="button blue">Gå tillbaka och ändra</button> eller <button type="submit" name="action" value="add" class="button green">Bekräfta och lägg till menyn</button> <!--<a href="#" class="close">Stäng</a>-->'."\n";
 				$output .= '</div>'."\n";
 				
 				require_once( 'weeksMenu.view.class.php' );
@@ -385,6 +385,8 @@
 			
 			require_once('ratings.class.php');
 			$this->class->ratings = new Ratings();
+			
+			$output .= '<div class="switch-container clearfix"><span class="switch left active switch-left" id="switch-browse">Bläddra</span><span class="switch left switch-right" id="switch-search">Sök</span></div>'."\n";
 			
 			if($result->num_rows > 0)
 			{
@@ -469,6 +471,13 @@
 				}
 				
 				$output .= '</ul>'."\n";
+				
+				$output .= '<div class="search-box-inline hide">'."\n";
+				$output .= '<h4>Sök efter recept</h4>'."\n";
+				$output .= '<input type="text" name="q" id="q" value="Sök efter recept" />'."\n";
+				$output .= '<button>Sök</button>'."\n";
+				$output .= '<div class="search-results"></div>'."\n";
+				$output .= '</div>'."\n";
 			}
 			
 			return $output;

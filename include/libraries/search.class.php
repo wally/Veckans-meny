@@ -17,6 +17,25 @@
 			$this->db = new DB();
 		}
 		
+		public function processAJAXrequest($GET_data = array(), $POST_data = array())
+		{
+			if(!isset($GET_data['action']))
+			{
+				return false;
+			}
+			
+			$return = array();
+			
+			switch($GET_data['action'])
+			{
+				case 'getInlineSearchResults':
+					$return['output'] = $this->getInlineSearchResults($GET_data, $POST_data);
+				break;
+			}
+			
+			return $return;
+		}
+		
 		public function search($options = array())
 		{
 			if( !(isset($options['q']) && !empty($options['q'])) )
@@ -68,7 +87,7 @@
 		
 		public function displaySearchResults()
 		{
-			if( $this->searchResults == '') //check if a search has been made. If it has, searchResults should be an array
+			if( !is_array($this->searchResults) ) //check if a search has been made. If it has, searchResults should be an array
 			{
 				$this->getSearchResults();
 			}
@@ -104,6 +123,8 @@
 						break;
 					}
 					
+					$output .= '<li>'."\n";
+					
 					$userRating = array('favourite'=> false);
 					
 					if(isset($_SESSION['userId']))
@@ -127,11 +148,15 @@
 
 					
 					$output .= 'Tillagd '.$added.' av '.$result['addedBy'].' &bullet; '. $result['views'].' visning'.($result['views'] == 1 ? '' : 'ar').' &bullet; '.(is_null($result['grade']) ? 'Inget betyg än' : $result['grade'])."\n";
+					
+					$output .= '</li>'."\n";
 				}
 				$output .= '</ul>'."\n";
 			}
 			else
 			{
+				$output .= '<li>'."\n";
+				
 				$output .= 'Hittade inga ';
 				
 				if($this->options['recipies'])
@@ -150,6 +175,7 @@
 				}
 				
 				$output .= '. Prova med en annan term eller leta själv bland <a href="/recept/">recepten</a> och <a href="/veckans-meny/">menyer</a>.'."\n";
+				$output .= '</li>'."\n";
 			}
 			
 			$output .= '</div>'."\n";
@@ -220,6 +246,8 @@
 					$this->searchResults[] = $row;
 				}
 			}
+			
+			return $this->searchResults;
 		}
 		
 		public function cleanOptions($options = array())
@@ -250,5 +278,205 @@
 						
 			return $cleanOptions;
 		}
+		
+		public function getInlineSearchResults($requestInfo, $data)
+		{
+			if( !(isset($data['q']) && !empty($data['q'])) )
+			{
+				$hasSearched = false;
+			}
+			else
+			{
+				$hasSearched = true;
+			}
+			
+			$this->options = $this->cleanOptions($data);
+			$this->page = 1;
+			
+			if(isset($data['page']) && is_numeric($data['page']))
+			{
+				$this->page = intval($data['page']);
+			}
+			$this->offset = $this->viewLimit*($this->page-1);
+			$data['recipies'] = true;
+			$result = $this->getSearchResults($data);
+			
+			$output = '';
+			
+			$output .= '<h4>Sökresultat</h4>'."\n";
+			/*
+			if(count($this->searchResults) > 0)
+			{
+				$output .= '<p style="font-size:12px;font-weight:bold;color:black;">'.count($this->searchResults).' träff'.(count($this->searchResults) == 1 ? '' : 'ar').'</p>'."\n";
+				$output .= '<ul class="search-results-slide">'."\n";
+
+				require_once( 'recipies.class.php' );
+				require_once( 'weeksMenu.class.php' );
+				require_once( 'ratings.class.php' );
+				
+				$this->classes->recipies = new Recipies();
+				$this->classes->weeksMenu = new WeeksMenu();
+				$this->classes->ratings = new Ratings();
+				foreach($this->searchResults as $result)
+				{
+					switch($result['type'])
+					{
+						case 'recipie':
+							$link = $this->classes->recipies->createRecipieLink(null, false, $result);
+							break;
+						case 'menu':
+							$link = $this->classes->weeksMenu->createMenuLink(null, false, $result);
+						break;
+					}
+					
+					$output .= '<li>'."\n";
+					$userRating = array('favourite'=> false);
+					
+					if(isset($_SESSION['userId']))
+					{
+						$userRating = $this->classes->ratings->getUserRating(array('type'=>$result['type'], 'typeId'=>$result['id'], 'userId'=>intval($_SESSION['user_id'])));
+					}
+					$output .= '<h5>'.$link.'</h5>'."\n";
+					
+					if($userRating['favourite'])
+					{
+						$output .= 'Favorit';
+					}
+					
+					if(!empty($result['description']))
+					{
+						$output .= '<p>'.$this->bbcode($result['description']).'</p>'."\n";
+					}
+					
+					$added = strftime('%e %b %Y', strtotime( $result['added'] ) );
+					$added = strtolower( $added );
+
+					
+					$output .= 'Tillagd '.$added.' av '.$result['addedBy'].' &bullet; '. $result['views'].' visning'.($result['views'] == 1 ? '' : 'ar').' &bullet; '.(is_null($result['grade']) ? 'Inget betyg än' : $result['grade'])."\n";
+					
+					$output .= '</li>'."\n";
+				}
+				$output .= '</ul>'."\n";
+				
+				*/
+				
+			if(count($this->searchResults) > 0)
+			{
+			
+				$output .= '<p style="font-size:12px;font-weight:bold;color:black;">'.count($this->searchResults).' träff'.(count($this->searchResults) == 1 ? '' : 'ar').'</p>'."\n";
+				
+				require_once( 'recipies.class.php' );
+				require_once( 'weeksMenu.class.php' );
+				require_once( 'ratings.class.php' );
+				
+				$this->classes->recipies = new Recipies();
+				$this->classes->weeksMenu = new WeeksMenu();
+				$this->classes->ratings = new Ratings();
+				
+				$output .= '<ul class="search-results-slides">'."\n";
+				
+				$i = 1;
+				$page = 1;
+				
+				foreach($this->searchResults as $result)
+				{
+					switch($result['type'])
+					{
+						case 'recipie':
+							$link = $this->classes->recipies->createRecipieLink(null, false, $result);
+							break;
+						case 'menu':
+							$link = $this->classes->weeksMenu->createMenuLink(null, false, $result);
+						break;
+					}
+
+					if($i == 4)
+					{
+						$page++;
+						$i = 1;
+					}
+					
+					if($i == 1)
+					{
+						$output .= "\t".'<li class="recipies-slides-container-slide clearfix">'."\n";
+					}
+					
+					$userRating = array('favourite'=> false);
+					
+					if(isset($_SESSION['userId']))
+					{
+						$userRating = $this->classes->ratings->getUserRating(array('type'=>$result['type'], 'typeId'=>$result['id'], 'userId'=>intval($_SESSION['user_id'])));
+					}
+
+					$output .= "\t"."\t".'<div class="recipies-slides-recipie-container';
+					
+					if(isset($userRating['favourite']) && $userRating['favourite'])
+					{
+						$output .= ' favourite'."\n";
+					}
+					
+					$output .= '">'."\n";
+					
+						$output .= "\t"."\t"."\t".'<div class="text">'."\n";
+							$output .= "\t"."\t"."\t"."\t".'<h5>'.$link.'</h5>'."\n";
+							
+							$output .= "\t"."\t"."\t"."\t".'<ul>'."\n";
+								$output .= "\t"."\t"."\t"."\t"."\t".'<li>Betyg: ';
+								if($result['grade'] == 0)
+								{
+									$output .= 'För få röster';
+								}
+								else
+								{
+									$output .= $result['grade'].'/5';
+								}
+								
+								$favouriteClass = '';
+								if($userRating['favourite'])
+								{
+									$title = 'Favoritmåltid - klicka för att ta bort som favorit';
+									$favouriteClass = 'favouritedRecipie';
+								}
+								else
+								{
+									$title = 'Klicka för att göra till favoritmåltid';
+								}
+					
+								$output .= '</li>'."\n";
+		
+								$output .= "\t"."\t"."\t"."\t"."\t".'<li>';
+		
+									$output .= $result['views'].' visning'. ($result['views'] == 1 ? '' : 'ar');
+		
+								$output .= '</li>' ."\n";
+		
+							$output .= "\t"."\t"."\t"."\t".'</ul>'."\n";
+						
+						$output .= "\t"."\t"."\t".'</div>'."\n";
+					
+						$output .= "\t"."\t"."\t".'<ul class="buttons">'."\n";
+							$output .= "\t"."\t"."\t"."\t".'<li><a href="#"><img src="/images/love-btn.png" alt="Favorit" /></a></li>'."\n";
+							$output .= "\t"."\t"."\t"."\t".'<li><a href="#"><img src="/images/add-btn.png" alt="Välj/Lägg till" class="add-recipie-button" id="recipieId-'.$result['id'].'" /></a></li>'."\n";
+							$output .= "\t"."\t"."\t"."\t".'<li><a href="#"><img src="/images/remove-btn.png" alt="Ta bort" /></a></li>'."\n";
+						$output .= "\t"."\t"."\t".'</ul>'."\n";
+					$output .= "\t"."\t".'</div>'."\n";
+					
+					if($i == 3)
+					{
+						$output .= "\t".'</li>'."\n";
+					}
+					
+					$i++;
+				}
+				
+				$output .= '</ul>'."\n";
+			}
+			else
+			{
+				$output .= 'Hittade inga recept. Försök med ett mer allmänt sökord eller bläddra bland recepten.';
+			}
+			return $output;
+		}
+	//close class
 	}
 ?>

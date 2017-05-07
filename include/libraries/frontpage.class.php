@@ -1,12 +1,10 @@
 <?php
 
 	class Frontpage extends PublicFunctions
-	{
-		public $db;
-		
+	{	
 		public function __construct()
 		{
-			$this->db = new DB();
+			
 		}
 		
 		public function processFrontpage($options = array())
@@ -30,8 +28,8 @@
 			$output = '';
 			
 			$output .= $this->welcomeMessage();
-			$output .= $this->displayNewestMenus($options);
-			$output .= $this->displayNewestRecipies($options);
+			#$output .= $this->displayNewestMenus($options);
+			#$output .= $this->displayNewestRecipies($options);
 		}
 		
 		public function welcomeMessage()
