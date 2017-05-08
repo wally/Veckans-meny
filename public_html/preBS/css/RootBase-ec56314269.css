@@ -1585,7 +1585,7 @@ a {
 	background-color:transparent;
 }
 
-a:active,a:hover {
+a:active, .hovermq a:hover {
 	outline:0;
 }
 
@@ -1930,7 +1930,7 @@ td,th {
 	border:2px solid #fff;
 }
 
-.donate .bonus-checks .check-container input[type=radio]+label:hover {
+.hovermq  .donate .bonus-checks .check-container input[type=radio]+label:hover {
 	cursor:pointer;
 }
 

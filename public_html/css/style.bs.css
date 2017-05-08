@@ -1,0 +1,172 @@
+body {
+	background-color: #fcfcfc;
+	font-family: Lato, sans-serif;
+	font-weight: 400;
+}
+.navbar {
+ 	background: #fff;
+    color: #323232;
+    transition: opacity .6s;
+    opacity: 1;
+
+}
+.navbar.navbar-main {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+	position: relative;
+	z-index: 20;
+}
+.navbar-nav .nav-link, .navbar .minititle {
+    font-family: "Dosis", sans-serif;
+    font-weight: 300;
+    font-size: 23px;
+    text-transform: uppercase;
+    letter-spacing: .0625rem;
+    line-height: 55px;
+}
+.navbar-main .navbar-toggler-right {
+	top: 1.4rem;
+	z-index: 30;
+}
+.navbar-nav .nav-item {
+	transition: border-bottom 1s cubic-bezier(.19,1,.22,1);
+}
+.navbar-nav .nav-link {
+	transition: color 1s cubic-bezier(.19,1,.22,1);
+}
+.navbar-nav .nav-item:first-child {
+	margin-left: 0;
+}
+.navbar-nav .nav-item {
+	margin: 0 0.25rem;
+}
+.navbar-nav .nav-item:last-child {
+	margin-right: 0;
+}
+.navbar-nav .nav-item.nav-recipe {
+	border-bottom: 3px solid rgba(255, 89, 100, 0.35);
+}
+
+.navbar-nav .nav-item.nav-menus {
+	border-bottom: 3px solid rgba(53, 167, 255, 0.35);
+}
+
+.navbar-nav .nav-item.nav-themes {
+	border-bottom: 3px solid rgba(178, 219, 191, 0.35);
+}
+
+.navbar-nav .nav-item.nav-myweek {
+	border-bottom: 3px solid rgba(255, 231, 76, 0.35);
+}
+
+.hovermq .navbar-nav .nav-item:hover.nav-recipe {
+	border-bottom: 3px solid rgba(255, 89, 100, 1);
+}
+
+.hovermq .navbar-nav .nav-item:hover.nav-menus {
+	border-bottom: 3px solid rgba(53, 167, 255, 1);
+}
+
+.hovermq .navbar-nav .nav-item:hover.nav-themes {
+	border-bottom: 3px solid rgba(178, 219, 191, 1);
+}
+
+.hovermq .navbar-nav .nav-item:hover.nav-myweek {
+	border-bottom: 3px solid rgba(255, 231, 76, 1);
+}
+
+.hovermq  .navbar-nav .nav-link:hover > * {
+    color: #b1b0b0;
+}
+.hovermq  .navbar-nav:hover .nav-link {
+    color: #b1b0b0;
+}
+
+.navbar.nav-sub {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+	position: relative;
+	z-index: 10;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+}
+.navbar.nav-sub .nav-link {
+	font-size: 16px;
+	font-family: Lato, sans-serif;
+	letter-spacing: normal;
+	text-transform: none;
+	padding-top: 0;
+	padding-bottom: 0;
+	line-height: 2;
+}
+.navbar.nav-sub .navbar-nav:not(.activesub) {
+	display: none;
+}
+
+.navbar.nav-sub.nav-recipe {
+	background: rgba(255, 89, 100, 0.85);
+}
+.navbar.nav-sub.nav-recipe .nav-link {
+	color: #fff;
+}
+
+.navbar.nav-sub.nav-menus {
+	background: rgba(53, 167, 255, 0.85);
+}
+
+.navbar.nav-sub.nav-menus .nav-link {
+	color: #fff;
+}
+
+.navbar.nav-sub.nav-themes {
+	background: rgba(178, 219, 191, 0.85);
+}
+.navbar.nav-sub.nav-themes .nav-link {
+	color: #fff;
+}
+
+.navbar.nav-sub.nav-myweek {
+	background:  rgba(255, 231, 76, 0.85);
+}
+
+.navbar.nav-sub.nav-myweek .nav-link {
+	color: rgba(0, 0, 0, 0.9);
+}
+.navbar-brand {
+	width: 100% !important;
+}
+@media (min-width: 768px)
+{
+	.navbar-brand {
+		width: 25% !important;
+	}
+}
+
+.navbar-brand .minititle {
+	padding-right: 4rem;
+}
+.navbar-brand .minititle a {
+	color: rgba(0, 0, 0, 0.9);
+}
+
+/* extra-small size (xs) */
+svg.logoVM {
+	height: 55px;
+	margin-top: 8px;
+	transition: height 1s cubic-bezier(.19,1,.22,1);
+}
+
+
+/* extra small (xs) */
+@media (max-width: 576px)
+{
+	svg.logoVM {
+		height: 40px;
+	}
+}
+
+/* medium (md) */
+@media (min-width: 768px)
+{
+	svg.logoVM {
+		height: 60px;
+	}
+}
