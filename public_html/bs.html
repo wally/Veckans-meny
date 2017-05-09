@@ -6,11 +6,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:400,700|Dosis:300">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Dosis:300">
 		<link rel="stylesheet" href="/css/bootstrap.custom.css">
+		<link rel="stylesheet" href="/css/jquery-ui.min.css">
 		<link rel="stylesheet" href="/css/style.bs.css">
 		
 		<script type="text/javascript" src="/js/modernizr-custom.js"></script>
+		<script src="https://use.fontawesome.com/d3ba5f2c06.js"></script>
 
 		<title>Dhal, indisk linsgryta - Veckans meny</title>
 	</head>
@@ -28,7 +30,7 @@
 						    	<svg viewbox="0 0 805.999 319.499" class="logoVM"><use xlink:href="/images/logo.svg#Layer_1"></use></svg>
 							</a>
 					    </div>
-					    <div class="col-9 text-center minititle">					
+					    <div class="col-6 text-center minititle">					
 							<a class="mr-auto hidden-md-up justify-content-center" href="/recept/">
 								Recept
 							</a>
@@ -109,12 +111,200 @@
 				</div>
 			</nav>
         </header>
-    <h1>Hello, world!</h1>
+        
+        <div class="page-wrapper">
+			<div class="jumbotron">
+				<div class="container">
+				    <img src="/images/dhal.jpg" alt="Dahl" class="float-right img-thumbnail">
+					<h1>Dhal, indisk linsgryta <i class="fa fa-leaf fa-green" rel="tooltip" title="Vegetarisk"></i> <i class="fa fa-globe fa-blue" rel="tooltip" title="Klimatsmart"></i></h1>
+					<div class="meta-recipe">
+						<ul class="meta">
+							<li class="difficulty medium" rel="tooltip" title="Svårighetsgrad: Medel">
+								<ul>
+									<li><i class="fa fa-circle"></i></li>
+									<li><i class="fa fa-circle"></i></li>
+									<li><i class="fa fa-circle-thin"></i></li>
+									<li><i class="fa fa-circle-thin"></i></li>
+								</ul>
+							</li>
+							<li class="time">
+								<ul>
+									<li><i class="fa fa-clock-o"></i> 45 min</li>
+								</ul>
+							</li>
+							<li class="votes">
+								<ul>
+									<li rel="tooltip" title="Gilla det">45 <i class="fa fa-thumbs-o-up fa-blue"></i></li>
+									<li rel="tooltip" title="Gillade inte det">2 <i class="fa fa-thumbs-o-down"></i></li>
+									<li rel="tooltip" title="Klicka för att göra favorit" class="favourite-recipe">20 <i class="fa fa-heart-o fa-red"></i></li><!-- fa-heart if favourite -->
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<p class="lead">
+						För dig som gillar indisk mat kommer den här dhalen bli en favorit. Linsgrytan är fylld med rika kryddor som koriander, ingefära, kummin och kanel och serverad med färskt naanbröd och ris är rätten komplett.
+					</p>
+				
+				</div>
+			</div>
+			<div class="page-content container recipe row m-auto no-gutters">
+				<section class="ingredients col-lg-4">
+                    <header class="divided">
+                        <h2 class="title">Ingredienser</h2>
+                    </header>
 
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="/js/main.js" type="text/javascript"></script>
-  </body>
+                    <div class="slider-container" style="display:table; width: 100%">
+                        <fieldset class="portions ajax" data-datalayer="recipe-change-portions">
+                            <label for="portions">Portioner: <span class="counter">4</span></label>
+                            <select id="portions" class="range">
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                                <option value="3">
+                                    3
+                                </option>
+
+                                <option selected="selected" value="4">
+                                    4
+                                </option>
+
+                                <option value="5">
+                                    5
+                                </option>
+
+                                <option value="6">
+                                    6
+                                </option>
+
+                                <option value="7">
+                                    7
+                                </option>
+
+                                <option value="8">
+                                    8
+                                </option>
+
+                                <option value="9">
+                                    9
+                                </option>
+
+                                <option value="10">
+                                    10
+                                </option>
+
+                                <option value="11">
+                                    11
+                                </option>
+
+                                <option value="12">
+                                    12
+                                </option>
+                            </select> <input type="hidden" value="4" id="recipeServingsDefaultValueRWD">
+                        </fieldset>
+                    </div>
+
+                    <ul class="separated">
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> lök</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> morötter</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> vitlöksklyftor</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> msk rapsolja</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> msk riven, färsk ingefära</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> tsk koriander</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.125*$">1/2</span> tsk mald spiskummin</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> krm malen kanel</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="1*$">4</span> dl röda linser</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100*$">400</span> g krossade tomater</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100*$">400</span> ml kokosmjölk</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> grönsaksbuljongtärning</span></li>
+
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> dl vatten</span></li>
+
+                        <li><span class="block">salt</span></li>
+
+                        <li><span class="block">lime</span></li>
+                    </ul>
+
+                    <h3>Till servering</h3>
+
+                    <ul class="separated">
+                        <li><span class="block">ris</span></li>
+
+                        <li><span class="block">naanbröd</span></li>
+                    </ul>
+                </section>
+                
+                <section class="instructions col-lg-8" itemprop="recipeInstructions">
+                    <header class="divided">
+                        <h2>Så här gör du</h2>
+                    </header>
+
+                    <section class="disclaimer portion-disclaimer hidden-xs-up alert alert-warning">
+                        <button type="button" class="close" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+
+                        <h3>Bra att veta när du ändrar antalet portioner</h3>
+
+                        <p>Detta recept är gjort för 4 portioner. När du ändrar antalet portioner så ändras också mängden i ingredienserna. I vissa fall kan detta resultera i att tillagningstiden behöver justeras.</p>
+                    </section>
+
+                    <ol>
+                        <li>Skala l&ouml;k, mor&ouml;tter och vitl&ouml;k. T&auml;rna l&ouml;k och mor&ouml;tterna och finhacka vitl&ouml;ken.</li>
+
+                        <li>Fr&auml;s l&ouml;k, mor&ouml;tter och vitl&ouml;k i oljan i n&aring;gra minuter. R&ouml;r ned ingef&auml;ra, koriander, kummin och kanel. H&auml;ll i linserna och r&ouml;r om ordentligt, tills&auml;tt sedan krossade tomater, kokosmj&ouml;lk, gr&ouml;nsaksbuljong och vatten. L&aring;t det koka sakta under lock i 25 - 30 minuter. Smaka av med salt och limejuice.</li>
+
+                        <li><strong>Till servering:&nbsp;</strong>Servera dhal med ris och naanbr&ouml;d.</li>
+                        
+                        <li>Skala l&ouml;k, mor&ouml;tter och vitl&ouml;k. T&auml;rna l&ouml;k och mor&ouml;tterna och finhacka vitl&ouml;ken.</li>
+
+                        <li>Fr&auml;s l&ouml;k, mor&ouml;tter och vitl&ouml;k i oljan i n&aring;gra minuter. R&ouml;r ned ingef&auml;ra, koriander, kummin och kanel. H&auml;ll i linserna och r&ouml;r om ordentligt, tills&auml;tt sedan krossade tomater, kokosmj&ouml;lk, gr&ouml;nsaksbuljong och vatten. L&aring;t det koka sakta under lock i 25 - 30 minuter. Smaka av med salt och limejuice.</li>
+
+                        <li><strong>Till servering:&nbsp;</strong>Servera dhal med ris och naanbr&ouml;d.</li>
+                        
+                        <li>Skala l&ouml;k, mor&ouml;tter och vitl&ouml;k. T&auml;rna l&ouml;k och mor&ouml;tterna och finhacka vitl&ouml;ken.</li>
+
+                        <li>Fr&auml;s l&ouml;k, mor&ouml;tter och vitl&ouml;k i oljan i n&aring;gra minuter. R&ouml;r ned ingef&auml;ra, koriander, kummin och kanel. H&auml;ll i linserna och r&ouml;r om ordentligt, tills&auml;tt sedan krossade tomater, kokosmj&ouml;lk, gr&ouml;nsaksbuljong och vatten. L&aring;t det koka sakta under lock i 25 - 30 minuter. Smaka av med salt och limejuice.</li>
+
+                        <li><strong>Till servering:&nbsp;</strong>Servera dhal med ris och naanbr&ouml;d.</li>
+                        
+                        <li>Skala l&ouml;k, mor&ouml;tter och vitl&ouml;k. T&auml;rna l&ouml;k och mor&ouml;tterna och finhacka vitl&ouml;ken.</li>
+
+                        <li>Fr&auml;s l&ouml;k, mor&ouml;tter och vitl&ouml;k i oljan i n&aring;gra minuter. R&ouml;r ned ingef&auml;ra, koriander, kummin och kanel. H&auml;ll i linserna och r&ouml;r om ordentligt, tills&auml;tt sedan krossade tomater, kokosmj&ouml;lk, gr&ouml;nsaksbuljong och vatten. L&aring;t det koka sakta under lock i 25 - 30 minuter. Smaka av med salt och limejuice.</li>
+
+                        <li><strong>Till servering:&nbsp;</strong>Servera dhal med ris och naanbr&ouml;d.</li>
+                    </ol>
+
+                    <h3>F&ouml;r alla</h3>
+
+                    <p>L&auml;s noga ingrediensf&ouml;rteckningen p&aring; buljongt&auml;rningen f&ouml;r samtliga allergener. I &ouml;vrigt&nbsp;&auml;r r&auml;tten fri fr&aring;n laktos, mj&ouml;lkprotein och &auml;gg.<br>
+                    G&ouml;r glutenfri: servera med glutenfritt br&ouml;d.</p>
+
+                    <div id="IcaOnlineBuyButton" class="icaOnlineBuyButton"></div>
+                </section>
+			</div>
+        </div>
+	
+		<!-- jQuery first, then Tether, then Bootstrap JS. -->
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="/js/main.js" type="text/javascript"></script>
+	</body>
 </html>
