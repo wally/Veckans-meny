@@ -190,13 +190,15 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-brand {
 	width: 100% !important;
 }
+.navbar-nav .nav-link {
+	font-size: 19px;
+}
 @media (min-width: 768px)
 {
 	.navbar-brand {
 		width: 25% !important;
 	}
 }
-
 .navbar-brand .minititle a {
 	color: rgba(0, 0, 0, 0.9);
 }
@@ -206,6 +208,11 @@ h1, h2, h3, h4, h5, h6 {
 	{
 		padding-left: 3rem;
 	}
+	
+	.navbar-nav .nav-link {
+		font-size: 23px;
+	}
+
 }
 /* extra-small size (xs) */
 svg.logoVM {
@@ -477,4 +484,47 @@ svg.logoVM {
 
 #portions {
 	display: none;
+}
+.recipe-image-container .img-thumbnail {
+	float: none;
+	margin-bottom: 2rem;
+}
+.recipe-header-container {
+	float: left;
+}
+.recipe .page-wrapper .jumbotron {
+	padding-bottom: 0;
+}
+.recipe .page-wrapper .jumbotron .container:after {
+	display: block;
+	content: "";
+	clear: both;
+}
+
+@media (min-width: 850px)
+{
+	.recipe-image-container {
+		float: right;
+		margin-bottom: 0;
+	}	
+	.recipe-header-container {
+		float: none;
+	}
+	.recipe .page-wrapper .container:after {
+		display: block;
+		content: "";
+		clear: both;
+	}
+}
+.tags {
+	padding-bottom: 1rem;
+}
+.tags ul {
+	padding: 0;
+}
+.tags ul li {
+	display: inline-block;
+}
+.tags ul .badge {
+	padding: 0.55em 0.8em;
 }

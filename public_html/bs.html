@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="recipe">
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
@@ -55,7 +55,7 @@
 			        </ul>
 			        <ul class="nav navbar-nav ml-auto w-50 justify-content-end">
 			            <li class="nav-item">
-			                <a class="nav-link" href="#">Hej Waldemar! v</a>
+			                <a class="nav-link" href="#">Hej Waldemar! <i class="fa fa-angle-down"></i></a>
 			            </li>
 			        </ul>
 			    </div>
@@ -115,36 +115,47 @@
         <div class="page-wrapper">
 			<div class="jumbotron">
 				<div class="container">
-				    <img src="/images/dhal.jpg" alt="Dahl" class="float-right img-thumbnail">
-					<h1>Dhal, indisk linsgryta <i class="fa fa-leaf fa-green" rel="tooltip" title="Vegetarisk"></i> <i class="fa fa-globe fa-blue" rel="tooltip" title="Klimatsmart"></i></h1>
-					<div class="meta-recipe">
-						<ul class="meta">
-							<li class="difficulty medium" rel="tooltip" title="Svårighetsgrad: Medel">
-								<ul>
-									<li><i class="fa fa-circle"></i></li>
-									<li><i class="fa fa-circle"></i></li>
-									<li><i class="fa fa-circle-thin"></i></li>
-									<li><i class="fa fa-circle-thin"></i></li>
-								</ul>
-							</li>
-							<li class="time">
-								<ul>
-									<li><i class="fa fa-clock-o"></i> 45 min</li>
-								</ul>
-							</li>
-							<li class="votes">
-								<ul>
-									<li rel="tooltip" title="Gilla det">45 <i class="fa fa-thumbs-o-up fa-blue"></i></li>
-									<li rel="tooltip" title="Gillade inte det">2 <i class="fa fa-thumbs-o-down"></i></li>
-									<li rel="tooltip" title="Klicka för att göra favorit" class="favourite-recipe">20 <i class="fa fa-heart-o fa-red"></i></li><!-- fa-heart if favourite -->
-								</ul>
-							</li>
-						</ul>
+					<div class="recipe-image-container">
+					    <img src="/images/dhal.jpg" alt="Dahl" class="img-thumbnail">
 					</div>
-					<p class="lead">
-						För dig som gillar indisk mat kommer den här dhalen bli en favorit. Linsgrytan är fylld med rika kryddor som koriander, ingefära, kummin och kanel och serverad med färskt naanbröd och ris är rätten komplett.
-					</p>
-				
+					<div class="recipe-header-container">
+						<h1 >Dhal, indisk linsgryta <i class="fa fa-leaf fa-green" rel="tooltip" title="Vegetarisk"></i> <i class="fa fa-globe fa-blue" rel="tooltip" title="Klimatsmart"></i></h1>
+						<div class="meta-recipe">
+							<ul class="meta">
+								<li class="difficulty medium" rel="tooltip" title="Svårighetsgrad: Medel">
+									<ul>
+										<li><i class="fa fa-circle"></i></li>
+										<li><i class="fa fa-circle"></i></li>
+										<li><i class="fa fa-circle-thin"></i></li>
+										<li><i class="fa fa-circle-thin"></i></li>
+									</ul>
+								</li>
+								<li class="time">
+									<ul>
+										<li><i class="fa fa-clock-o"></i> 45 min</li>
+									</ul>
+								</li>
+								<li class="votes">
+									<ul>
+										<li rel="tooltip" title="Gilla det">45 <i class="fa fa-thumbs-o-up fa-blue"></i></li>
+										<li rel="tooltip" title="Gillade inte det">2 <i class="fa fa-thumbs-o-down"></i></li>
+										<li rel="tooltip" title="Klicka för att göra favorit" class="favourite-recipe">20 <i class="fa fa-heart-o fa-red"></i></li><!-- fa-heart if favourite -->
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<p class="lead">
+							För dig som gillar indisk mat kommer den här dhalen bli en favorit. Linsgrytan är fylld med rika kryddor som koriander, ingefära, kummin och kanel och serverad med färskt naanbröd och ris är rätten komplett.
+						</p>
+					
+						<div class="tags">
+							<ul>
+								<li><a href="#" class="badge badge-pill badge-success">Vegetariskt</a></li>
+								<li><a href="#" class="badge badge-pill badge-warning">Indiskt</a></li>
+								<li><a href="#" class="badge badge-pill badge-danger">Populärt</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="page-content container recipe row m-auto no-gutters">
