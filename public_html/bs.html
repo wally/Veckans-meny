@@ -53,11 +53,19 @@
 			                <a class="nav-link" href="#">Min vecka</a>
 			            </li>
 			        </ul>
-			        <ul class="nav navbar-nav ml-auto w-50 justify-content-end">
-			            <li class="nav-item">
-			                <a class="nav-link" href="#">Hej Waldemar! <i class="fa fa-angle-down"></i></a>
-			            </li>
-			        </ul>
+			        <div class="nav navbar-nav navbar-user-menu ml-auto justify-content-end">
+				        <div class="dropdown">
+							<span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Hej Waldemar! <i class="fa fa-angle-down"></i>
+							</span>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Mina menyer</a>
+								<a class="dropdown-item" href="#">Mitt konto</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Logga ut</a>
+							</div>
+				        </div>
+					</div>
 			    </div>
 			</nav>
 			
@@ -167,6 +175,7 @@
                     <div class="slider-container" style="display:table; width: 100%">
                         <fieldset class="portions ajax" data-datalayer="recipe-change-portions">
                             <label for="portions">Portioner: <span class="counter">4</span></label>
+                            <div id="slider"><div class="ui-slider-handle"><i class="fa fa-angle-left"></i><i class="fa fa-angle-right"></i></div></div>
                             <select id="portions" class="range">
                                 <option value="1">
                                     1
@@ -215,36 +224,36 @@
                                 <option value="12">
                                     12
                                 </option>
-                            </select> <input type="hidden" value="4" id="recipeServingsDefaultValueRWD">
+                            </select> <input type="hidden" value="4" id="recipeServingsDefaultValue">
                         </fieldset>
                     </div>
 
                     <ul class="separated">
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> lök</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25">1</span> lök</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> morötter</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5">2</span> morötter</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> vitlöksklyftor</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5">2</span> vitlöksklyftor</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> msk rapsolja</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5">2</span> msk rapsolja</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> msk riven, färsk ingefära</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25">1</span> msk riven, färsk ingefära</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> tsk koriander</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25">1</span> tsk koriander</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.125*$">1/2</span> tsk mald spiskummin</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.125">1/2</span> tsk mald spiskummin</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> krm malen kanel</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25">1</span> krm malen kanel</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="1*$">4</span> dl röda linser</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="1">4</span> dl röda linser</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100*$">400</span> g krossade tomater</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100">400</span> g krossade tomater</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100*$">400</span> ml kokosmjölk</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="100">400</span> ml kokosmjölk</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25*$">1</span> grönsaksbuljongtärning</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.25">1</span> grönsaksbuljongtärning</span></li>
 
-                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5*$">2</span> dl vatten</span></li>
+                        <li><span class="block"><span class="calculate" data-value="#portions" data-math="0.5">2</span> dl vatten</span></li>
 
                         <li><span class="block">salt</span></li>
 
@@ -265,7 +274,7 @@
                         <h2>Så här gör du</h2>
                     </header>
 
-                    <section class="disclaimer portion-disclaimer hidden-xs-up alert alert-warning">
+                    <section class="disclaimer portion-disclaimer alert alert-warning">
                         <button type="button" class="close" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -306,16 +315,176 @@
                     <p>L&auml;s noga ingrediensf&ouml;rteckningen p&aring; buljongt&auml;rningen f&ouml;r samtliga allergener. I &ouml;vrigt&nbsp;&auml;r r&auml;tten fri fr&aring;n laktos, mj&ouml;lkprotein och &auml;gg.<br>
                     G&ouml;r glutenfri: servera med glutenfritt br&ouml;d.</p>
 
-                    <div id="IcaOnlineBuyButton" class="icaOnlineBuyButton"></div>
                 </section>
 			</div>
         </div>
-	
+
+		<footer class="footer">
+			
+			<div class="footer-soundsgood">
+				<div class="pattern">
+					<div class="container">
+						<div class="row">
+							<div class="header col-md-6">
+								<h6>Låter gott va?</h6>
+								<p class="lead">Anmäl dig till vårt nyhetsbrev för att få färska menyförslag varje vecka.</p>
+							</div>
+							<div class="form-container col-md-6">
+								
+								<form class="form" method="post" action="#">
+									<div class="form-group">
+										<label for="exampleInputEmail1"></label>
+										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-post">
+										<small id="emailHelp" class="form-text text-muted">Vi delar aldrig med oss av din e-post.</small>
+									</div>
+									
+									<div class="form-check">
+										När du ändå håller på, <label class="form-check-label createAccountCheckbox	">
+											<input type="checkbox" class="form-check-input">
+											skapa ett konto!
+										</label>
+									</div>
+									
+									<button type="submit" class="btn btn-primary cursor-pointer">Spara</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="container mw940">
+				<div class="row">
+					<div class="col-12 footer-logo">
+						<ul class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="/">
+							    	<svg viewbox="0 0 805.999 319.499" class="logoVM hidden-xs-down"><use xlink:href="/images/logo.svg#Layer_1"></use></svg>
+							    	<span class="hidden-sm-up">Start</span>
+								</a>
+							</li>
+							<li class="breadcrumb-item">
+								<a href="#">Recept</a>
+							</li>
+							<li class="breadcrumb-item active">
+								Dhal, indisk gryta
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<section class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<header>
+							<h3><a href="/recept/">Recept</a></h3>
+						</header>
+						<ul class="nav-links">
+							<li>
+								<a href="#">Mest populära</a>
+							</li>
+							<li>
+								<a href="#">Senaste</a>
+							</li>
+							<li>
+								<a href="#">Upptäck</a>
+							</li>
+						</ul>
+					</section>
+
+					<section class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<header>
+							<h3><a href="/menyer/">Menyer</a></h3>
+						</header>
+						<ul class="nav-links">
+							<li>
+								<a href="#">Mest populära</a>
+							</li>
+							<li>
+								<a href="#">Senaste</a>
+							</li>
+							<li>
+								<a href="#">Upptäck</a>
+							</li>
+						</ul>
+					</section>
+
+					<section class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<header>
+							<h3><a href="/teman/">Teman</a></h3>
+						</header>
+						<ul class="nav-links">
+							<li>
+								<a href="#">Mest populära</a>
+							</li>
+							<li>
+								<a href="#">Senaste</a>
+							</li>
+							<li>
+								<a href="#">Upptäck</a>
+							</li>
+						</ul>
+					</section>
+
+					<section class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<header>
+							<h3><a href="/teman/">Mitt konto</a></h3>
+						</header>
+						<ul class="nav-links">
+							<li>
+								<a href="#">Mina menyer</a>
+							</li>
+							<li>
+								<a href="#">Min favoriter</a>
+							</li>
+							<li>
+								<a href="#">Inställningar</a>
+							</li>
+							<li>
+								<a href="#">Logga ut</a>
+							</li>
+						</ul>
+					</section>
+					
+					<section class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<header>
+							<h3><a href="/teman/">Om Veckans Meny</a></h3>
+						</header>
+						<ul class="nav-links">
+							<li>
+								<a href="#">Cookies</a>
+							</li>
+							<li>
+								<a href="#">Vad är Veckans Meny?</a>
+							</li>
+						</ul>
+					</section>
+				</div>
+			</div>
+			
+			<div class="row footer-end">
+					<div class="col-12 pb-3 pt-3">
+						<a href="/" class="no-decoration">
+							<svg viewbox="0 0 805.999 319.499" class="logoVM"><use xlink:href="/images/logo.svg#Layer_1"></use></svg>
+						</a>
+						<div class="copyright">
+							&copy; 2017
+						</div>
+						
+						<a href="#top" class="pull-right" id="totop">
+							<span class="fa-stack">
+								<i class="fa fa-circle fa-stack-2x icon-background"></i>
+								<i class="fa fa-angle-up fa-stack-1x"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+	    </footer>
+    
 		<!-- jQuery first, then Tether, then Bootstrap JS. -->
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
 		<script src="/js/main.js" type="text/javascript"></script>
 	</body>
 </html>
